@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project — CodeOnBaiti Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3D;
+    --navy-deep:#071427;
+    --orange:#F2732C;
+    --orange-deep:#D85A18;
+    --white:#FFFFFF;
+    --cream:#FFFFFF;
+    --ink:#12203B;
+    --ink-soft:#57647E;
+    --line:#E3E1D9;
+    --line-dark:rgba(255,255,255,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0; color:var(--ink-soft); line-height:1.7;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+  section{padding:112px 0;}
+  .eyebrow{
+    font-size:14px; color:var(--orange-deep); font-weight:500;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+  .reveal.d1{transition-delay:.08s;}
+  .reveal.d2{transition-delay:.16s;}
+  .reveal.d3{transition-delay:.24s;}
+  .reveal.d4{transition-delay:.32s;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 40px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px;
+    color:var(--navy);
+  }
+  .logo span{color:var(--orange);}
+  nav.links{display:flex; align-items:center; gap:36px;}
+  nav.links a{
+    font-size:15px; color:var(--ink); position:relative; padding:4px 0; cursor:pointer;
+  }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--orange); transition:width .3s ease;
+  }
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  nav.links a.active{color:var(--navy); font-weight:500;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-size:14px; font-weight:500;
+    cursor:pointer; border:1px solid transparent; transition:all .25s ease;
+  }
+  .btn-primary{background:var(--orange); color:var(--white);}
+  .btn-primary:hover{background:var(--orange-deep); transform:translateY(-2px);}
+  .btn-ghost{background:transparent; color:var(--navy); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-outline-light{background:transparent; color:var(--white); border:1px solid var(--line-dark);}
+  .btn-outline-light:hover{border-color:var(--orange); color:var(--orange);}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center;
+    max-width:1180px; margin:0 auto; padding:96px 40px 100px;
+    gap:40px;
+  }
+  .hero h1{font-size:52px; max-width:560px;}
+  .hero h1 em{font-style:italic; color:var(--orange-deep);}
+  .hero p.lead{font-size:18px; max-width:460px; margin-top:22px;}
+  .hero-cta{display:flex; gap:16px; margin-top:36px;}
+  .hero-stats{display:flex; gap:40px; margin-top:56px; padding-top:32px; border-top:1px solid var(--line);}
+  .hero-stats div b{display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--navy); font-weight:500;}
+  .hero-stats div span{font-size:13px; color:var(--ink-soft);}
+
+  .hero-visual{
+    position:relative; height:520px;
+  }
+  .hero-panel{
+    position:absolute; inset:0;
+    background:var(--navy);
+    clip-path:polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    overflow:hidden;
+  }
+  .hero-panel video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0.55;
+  }
+  .hero-panel .veil{
+    position:absolute; inset:0; background:var(--navy); opacity:0.35;
+  }
+  .hero-panel .bracket{
+    position:absolute; right:-30px; top:50%; transform:translateY(-50%);
+    font-family:'Fraunces', serif; font-size:280px; color:rgba(242,115,44,0.22);
+    line-height:1; user-select:none;
+  }
+  .hero-photo{
+    position:absolute; left:0; bottom:34px; width:280px;
+    border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(7,20,39,0.35);
+    border:6px solid var(--white);
+    transform:rotate(-3deg);
+    transition:transform .4s ease;
+  }
+  .hero-photo:hover{transform:rotate(0deg) translateY(-4px);}
+  .hero-photo img{height:200px; width:100%; object-fit:cover;}
+  .hero-dot{
+    position:absolute; width:14px; height:14px; border-radius:50%; background:var(--orange);
+    top:60px; right:60px;
+  }
+
+  /* ---------- marquee strip ---------- */
+  .strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 0; background:var(--cream);
+  }
+  .strip .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;}
+  .strip span{font-size:14px; color:var(--ink-soft);}
+  .strip strong{color:var(--navy); font-weight:500;}
+
+  /* ---------- section heading ---------- */
+  .section-head{max-width:600px; margin-bottom:56px;}
+  .section-head h2{font-size:36px; margin-top:12px;}
+  .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+
+  /* ---------- services ---------- */
+  .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .service-card{
+    border:1px solid var(--line); border-radius:16px; padding:36px 30px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    background:var(--white);
+  }
+  .service-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 28px 50px rgba(11,30,61,0.10);
+    border-color:var(--orange);
+  }
+  .service-num{
+    width:44px; height:44px; border-radius:10px; background:var(--navy);
+    color:var(--orange); display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:18px; margin-bottom:24px;
+  }
+  .service-card h3{font-size:21px; margin-bottom:12px;}
+  .service-card p{font-size:14.5px; margin-bottom:18px;}
+  .service-card ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .service-card li{font-size:13.5px; color:var(--ink-soft); padding-left:16px; position:relative;}
+  .service-card li::before{content:"—"; position:absolute; left:0; color:var(--orange);}
+  .service-link{display:inline-block; margin-top:22px; font-size:14px; color:var(--navy); font-weight:500; border-bottom:1px solid var(--orange); padding-bottom:2px;}
+
+  /* ---------- process ---------- */
+  .process{background:var(--navy); color:var(--white);}
+  .process .section-head h2, .process .section-head .eyebrow{color:var(--white);}
+  .process .section-head .eyebrow{color:var(--orange);}
+  .process .section-head p{color:rgba(255,255,255,0.65);}
+  .process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative;}
+  .process-row::before{
+    content:""; position:absolute; top:22px; left:6%; right:6%; height:1px;
+    background:var(--line-dark);
+  }
+  .process-step{padding:0 20px; position:relative;}
+  .process-step .step-num{
+    width:44px; height:44px; border-radius:50%; background:var(--navy-deep);
+    border:1px solid var(--orange); color:var(--orange); font-family:'Fraunces',serif;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    margin-bottom:26px; position:relative; z-index:2;
+  }
+  .process-step h3{color:var(--white); font-size:19px; margin-bottom:10px;}
+  .process-step p{color:rgba(255,255,255,0.62); font-size:14px;}
+
+  /* ---------- why us ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .why-item{background:var(--white); padding:34px 30px; transition:background .3s ease;}
+  .why-item:hover{background:var(--cream);}
+  .why-item h3{font-size:17px; margin-bottom:10px;}
+  .why-item p{font-size:14px;}
+
+  /* ---------- portfolio ---------- */
+  .work-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .work-card{
+    position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
+  }
+  .work-card img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .work-card:hover img{transform:scale(1.08);}
+  .work-overlay{
+    position:absolute; inset:0; display:flex; align-items:flex-end; padding:20px;
+    background:rgba(7,20,39,0.55);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .work-card:hover .work-overlay{opacity:1;}
+  .work-overlay div p{color:rgba(255,255,255,0.7); font-size:12.5px; margin-top:2px;}
+  .work-overlay div b{color:var(--white); font-family:'Fraunces',serif; font-weight:500; font-size:17px;}
+
+  /* ---------- quote ---------- */
+  .quote{background:var(--cream); text-align:center;}
+  .quote blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-size:30px; color:var(--navy);
+    max-width:760px; margin:0 auto; line-height:1.5;
+  }
+  .quote cite{display:block; margin-top:24px; font-style:normal; font-size:14px; color:var(--ink-soft);}
+
+  /* ---------- cta band ---------- */
+  .cta-band{
+    background:var(--navy); color:var(--white); border-radius:24px;
+    padding:64px 60px; display:flex; align-items:center; justify-content:space-between;
+    margin:0 40px; gap:24px; flex-wrap:wrap;
+    position:relative; overflow:hidden;
+  }
+  .cta-band::after{
+    content:""; position:absolute; right:0; top:0; width:6px; height:100%;
+    background:var(--orange);
+  }
+  .cta-band h2{color:var(--white); font-size:32px; max-width:420px; position:relative;}
+  .cta-band .cta-actions{display:flex; gap:14px; position:relative;}
+
+  /* ---------- footer ---------- */
+  footer{padding:70px 0 40px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:40px; border-bottom:1px solid var(--line);}
+  .footer-grid h4{font-size:14px; color:var(--navy); margin-bottom:18px; font-weight:500;}
+  .footer-grid ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .footer-grid a{font-size:14px; color:var(--ink-soft); transition:color .2s ease;}
+  .footer-grid a:hover{color:var(--orange-deep);}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:24px; font-size:13px; color:var(--ink-soft); flex-wrap:wrap; gap:10px;}
+
+  /* ---------- about page ---------- */
+  .about-hero{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+    padding:90px 0 100px;
+  }
+  .about-hero img{border-radius:18px; height:440px; width:100%; object-fit:cover;}
+  .about-hero h1{font-size:44px;}
+  .about-hero p.lead{font-size:17px; margin-top:20px;}
+
+  .mission-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .mission-card{
+    border:1px solid var(--line); border-radius:16px; padding:38px;
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .mission-card:hover{border-color:var(--orange); transform:translateY(-6px);}
+  .mission-card .eyebrow{display:block; margin-bottom:14px;}
+  .mission-card p{font-size:15.5px; color:var(--ink);}
+
+  .values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .value-card{padding:26px 6px; border-top:2px solid var(--navy); transition:border-color .3s ease;}
+  .value-card:hover{border-color:var(--orange);}
+  .value-card h3{font-size:18px; margin-bottom:10px;}
+  .value-card p{font-size:13.5px;}
+
+  .culture-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:18px; height:520px;}
+  .culture-grid img{width:100%; height:100%; object-fit:cover; border-radius:14px; transition:transform .5s ease;}
+  .culture-grid .g1{grid-row:1 / 3;}
+  .culture-item{overflow:hidden; border-radius:14px;}
+  .culture-item:hover img{transform:scale(1.06);}
+
+  @media (max-width:900px){
+    nav.links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:60px;}
+    .hero-visual{height:360px; margin-top:20px;}
+    .hero h1{font-size:38px;}
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
+    .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
+    .about-hero{grid-template-columns:1fr;}
+    .cta-band{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+<style>
+  /* ---------- mobile nav ---------- */
+  .menu-toggle{
+    display:none; background:none; border:none; cursor:pointer; padding:6px;
+    flex-direction:column; justify-content:center; gap:5px; z-index:60;
+  }
+  .menu-toggle span{display:block; width:22px; height:2px; background:var(--navy); border-radius:2px; transition:all .25s ease;}
+  .mobile-overlay{
+    position:fixed; inset:0; background:rgba(7,20,39,0.45); z-index:190;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .mobile-overlay.show{opacity:1; pointer-events:auto;}
+  .mobile-drawer{
+    position:fixed; top:0; right:-300px; width:280px; max-width:82vw; height:100vh;
+    background:var(--white); z-index:200; box-shadow:-16px 0 50px rgba(7,20,39,0.18);
+    transition:right .35s cubic-bezier(.2,.7,.2,1);
+    padding:26px 26px 34px; display:flex; flex-direction:column;
+  }
+  .mobile-drawer.open{right:0;}
+  .drawer-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:30px;}
+  .drawer-close{background:none; border:none; font-size:24px; color:var(--ink-soft); cursor:pointer; line-height:1;}
+  .drawer-links{display:flex; flex-direction:column; gap:2px; margin-bottom:auto;}
+  .mobile-drawer .drawer-links a{
+    font-size:16px; color:var(--ink); padding:14px 4px; border-bottom:1px solid var(--line);
+  }
+  .mobile-drawer .drawer-links a.active{color:var(--orange-deep); font-weight:600;}
+  .mobile-drawer .btn{width:100%; justify-content:center; margin-top:24px;}
+
+  @media (max-width:900px){
+    .menu-toggle{display:flex;}
+    .navbar > .btn-primary{display:none;}
+    .proj-body{grid-template-columns:1fr;}
+    .proj-hero h1{font-size:32px;}
+  }
+</style>
+
+
+<style>
+  .proj-hero{padding:70px 0 20px;}
+  .proj-back{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft); margin-bottom:28px;}
+  .proj-back:hover{color:var(--orange-deep);}
+  .proj-industry{display:block; font-size:12px; font-weight:600; color:var(--orange-deep); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:14px;}
+  .proj-hero h1{font-size:44px; max-width:720px;}
+  .proj-thumb{
+    height:340px; border-radius:20px; position:relative; overflow:hidden; margin-top:44px;
+    background-color:#F2EFE9; background-size:cover; background-position:center;
+  }
+  .proj-thumb::after{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(7,20,39,0.6), rgba(7,20,39,0) 55%);}
+  .proj-thumb-label{position:absolute; left:26px; bottom:22px; z-index:2; font-size:14px; font-weight:700; letter-spacing:0.08em; color:var(--white);}
+  .proj-body{display:grid; grid-template-columns:1.4fr 0.9fr; gap:56px; padding:70px 0;}
+  .proj-body h2{font-size:24px; margin-bottom:16px;}
+  .proj-body p.desc{font-size:15.5px; margin-bottom:20px;}
+  .proj-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;}
+  .proj-tags span{font-size:12.5px; padding:8px 14px; border-radius:999px; background:var(--cream); border:1px solid var(--line); color:var(--ink);}
+  .proj-side{border:1px solid var(--line); border-radius:16px; padding:30px; height:fit-content;}
+  .proj-side .row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
+  .proj-side .row:last-child{border-bottom:none;}
+  .proj-side .row span:first-child{color:var(--ink-soft);}
+  .proj-side .row span:last-child{color:var(--ink); font-weight:500;}
+  .proj-side .btn{width:100%; justify-content:center; margin-top:20px;}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html" class="active">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a class="btn btn-primary" href="contact.html">Start a project</a>
+  </div>
+</header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-top">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="drawer-links">
+    <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html" class="active">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html">Contact</a>
+  </div>
+  <a class="btn btn-primary" href="contact.html">Start a project</a>
+</div>
+
+
+<section class="proj-hero">
+  <div class="wrap">
+    <a class="proj-back" href="portfolio.html">← Back to portfolio</a>
+    <span class="proj-industry" id="projIndustry">Industry</span>
+    <h1 id="projTitle">Project title</h1>
+    <div class="proj-thumb"><span class="proj-thumb-label" id="projPillar">PILLAR</span></div>
+  </div>
+</section>
+
+<section style="padding:0;">
+  <div class="wrap">
+    <div class="proj-body">
+      <div class="reveal">
+        <h2>About this project</h2>
+        <p class="desc" id="projDesc">Description</p>
+        <p class="desc" id="projDesc2">Extra description</p>
+        <h2 style="margin-top:20px;">What we delivered</h2>
+        <div class="proj-tags" id="projTags"></div>
+      </div>
+      <div class="proj-side reveal d1">
+        <div class="row"><span>Pillar</span><span id="sidePillar">—</span></div>
+        <div class="row"><span>Client type</span><span id="sideIndustry">—</span></div>
+        <div class="row"><span>Focus</span><span id="sideFocus">—</span></div>
+        <a class="btn btn-primary" href="mailto:hello@codeonbaiti.com">Start a similar project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--navy); padding:90px 0;">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="reveal" style="color:var(--white); font-size:32px; max-width:600px; margin:0 auto;">Have a project like this in mind?</h2>
+    <div class="reveal d1" style="display:flex; gap:14px; justify-content:center; margin-top:28px;">
+      <a class="btn btn-primary" href="mailto:hello@codeonbaiti.com">Start a project →</a>
+      <a class="btn btn-outline-light" href="portfolio.html">See more work</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+        <p style="margin-top:16px; font-size:14px; max-width:260px;">Digital · Creative · Growth. Practical solutions for businesses, organizations and individuals.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#pillar-1">Web &amp; mobile</a></li>
+          <li><a href="services.html#pillar-2">Branding &amp; design</a></li>
+          <li><a href="services.html#pillar-3">Social &amp; marketing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="gifts.html">Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@codeonbaiti.com">hello@codeonbaiti.com</a></li>
+          <li><a href="#">+254 700 000 000</a></li>
+          <li><a href="#">@codeonbaiti</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© CodeOnBaiti Media</span>
+      <span>Design preview — not final code</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const PROJECTS = {
+    "institutional-website-refresh": {
+      pillar:"build", industry:"Schools & institutions",
+      title:"Institutional website refresh",
+      desc:"A responsive site with admissions information, news, and downloadable documents, optimized for speed on mobile networks.",
+      desc2:"Built to make it easy for prospective families and existing students to find what they need in a few taps, even on slower connections.",
+      tags:["Website development","Performance","Maintenance"], focus:"Website",
+      img:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1000&q=80"
+    },
+    "booking-registration-platform": {
+      pillar:"build", industry:"Service SME",
+      title:"Booking & registration platform",
+      desc:"A web application that replaced manual registers with online bookings, customer records, and daily reporting.",
+      desc2:"Staff now handle bookings and lookups from one dashboard instead of paper logs and spreadsheets.",
+      tags:["Web application","Dashboards","Data collection"], focus:"Web application",
+      img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80"
+    },
+    "customer-service-mobile-app": {
+      pillar:"build", industry:"Retail",
+      title:"Customer service mobile app",
+      desc:"A cross-platform app giving customers order tracking and support, with an internal view for the team.",
+      desc2:"One codebase serves both Android and iOS, with a separate internal view for the support team.",
+      tags:["Mobile app","Cross-platform","Support"], focus:"Mobile app",
+      img:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1000&q=80"
+    },
+    "full-brand-identity-system": {
+      pillar:"brand", industry:"Startup",
+      title:"Full brand identity system",
+      desc:"Logo, colour system, typography, and brand guidelines built for a first-time launch across print and screen.",
+      desc2:"Delivered as a guidelines document so the founding team can apply it consistently as the business grows.",
+      tags:["Logo design","Brand guidelines","Colour system"], focus:"Brand identity",
+      img:"https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=1000&q=80"
+    },
+    "company-profile-print-suite": {
+      pillar:"brand", industry:"Organization",
+      title:"Company profile & print suite",
+      desc:"A designed company profile, brochures, letterheads, and business cards delivered as a consistent set.",
+      desc2:"Print-ready files across every format the client's printer needed, matched to the existing brand.",
+      tags:["Graphic design","Print","Branding assets"], focus:"Print design",
+      img:"https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=1000&q=80"
+    },
+    "social-template-library": {
+      pillar:"brand", industry:"Personal brand",
+      title:"Social template library",
+      desc:"A reusable set of social media templates and email signatures so every post stays on brand.",
+      desc2:"Editable templates mean new content goes out fast without drifting from the visual identity.",
+      tags:["Templates","Social graphics","Consistency"], focus:"Brand assets",
+      img:"https://images.unsplash.com/photo-1634942536790-6d31b3f9d2c9?auto=format&fit=crop&w=1000&q=80"
+    },
+    "always-on-social-management": {
+      pillar:"grow", industry:"SME",
+      title:"Always-on social management",
+      desc:"Content planning, scheduling, and audience engagement across platforms with monthly performance reporting.",
+      desc2:"A standing content calendar keeps the account active without daily input from the client.",
+      tags:["Account management","Content calendar","Reporting"], focus:"Social management",
+      img:"https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=1000&q=80"
+    },
+    "lead-generation-campaign": {
+      pillar:"grow", industry:"Professional services",
+      title:"Lead generation campaign",
+      desc:"A paid advertising campaign paired with landing content, tracked from impression through to enquiry.",
+      desc2:"Weekly reporting tied ad spend directly to enquiries, so budget could shift toward what worked.",
+      tags:["Paid ads","Campaign planning","Lead generation"], focus:"Paid advertising",
+      img:"https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1000&q=80"
+    },
+    "launch-content-strategy": {
+      pillar:"grow", industry:"Non-profit",
+      title:"Launch content strategy",
+      desc:"Audience research, content themes, and a launch calendar that carried one message across every channel.",
+      desc2:"Every post traced back to the same core message, adapted per platform rather than repeated verbatim.",
+      tags:["Content strategy","Messaging","Audience research"], focus:"Content strategy",
+      img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80"
+    }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const data = PROJECTS[id] || PROJECTS["institutional-website-refresh"];
+
+  document.getElementById('projIndustry').textContent = data.industry;
+  document.getElementById('projTitle').textContent = data.title;
+  document.getElementById('projPillar').textContent = data.pillar.toUpperCase();
+  document.querySelector('.proj-thumb').style.backgroundImage = `url('${data.img}')`;
+  document.getElementById('projDesc').textContent = data.desc;
+  document.getElementById('projDesc2').textContent = data.desc2;
+  document.getElementById('sidePillar').textContent = data.pillar.charAt(0).toUpperCase() + data.pillar.slice(1);
+  document.getElementById('sideIndustry').textContent = data.industry;
+  document.getElementById('sideFocus').textContent = data.focus;
+  document.title = data.title + " — CodeOnBaiti Media";
+
+  const tagsEl = document.getElementById('projTags');
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.textContent = t;
+    tagsEl.appendChild(span);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+</script>
+
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var drawer = document.getElementById('mobileDrawer');
+    var overlay = document.getElementById('mobileOverlay');
+    var closeBtn = document.getElementById('drawerClose');
+    if(!toggle || !drawer || !overlay) return;
+    function openDrawer(){
+      drawer.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeDrawer);
+    });
+  })();
+</script>
+
+</body>
+</html>

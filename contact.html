@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — CodeOnBaiti Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3D;
+    --navy-deep:#071427;
+    --orange:#F2732C;
+    --orange-deep:#D85A18;
+    --white:#FFFFFF;
+    --cream:#FFFFFF;
+    --ink:#12203B;
+    --ink-soft:#57647E;
+    --line:#E3E1D9;
+    --line-dark:rgba(255,255,255,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0; color:var(--ink-soft); line-height:1.7;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+  section{padding:112px 0;}
+  .eyebrow{
+    font-size:14px; color:var(--orange-deep); font-weight:500;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+  .reveal.d1{transition-delay:.08s;}
+  .reveal.d2{transition-delay:.16s;}
+  .reveal.d3{transition-delay:.24s;}
+  .reveal.d4{transition-delay:.32s;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 40px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px;
+    color:var(--navy);
+  }
+  .logo span{color:var(--orange);}
+  nav.links{display:flex; align-items:center; gap:36px;}
+  nav.links a{
+    font-size:15px; color:var(--ink); position:relative; padding:4px 0; cursor:pointer;
+  }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--orange); transition:width .3s ease;
+  }
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  nav.links a.active{color:var(--navy); font-weight:500;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-size:14px; font-weight:500;
+    cursor:pointer; border:1px solid transparent; transition:all .25s ease;
+  }
+  .btn-primary{background:var(--orange); color:var(--white);}
+  .btn-primary:hover{background:var(--orange-deep); transform:translateY(-2px);}
+  .btn-ghost{background:transparent; color:var(--navy); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-outline-light{background:transparent; color:var(--white); border:1px solid var(--line-dark);}
+  .btn-outline-light:hover{border-color:var(--orange); color:var(--orange);}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center;
+    max-width:1180px; margin:0 auto; padding:96px 40px 100px;
+    gap:40px;
+  }
+  .hero h1{font-size:52px; max-width:560px;}
+  .hero h1 em{font-style:italic; color:var(--orange-deep);}
+  .hero p.lead{font-size:18px; max-width:460px; margin-top:22px;}
+  .hero-cta{display:flex; gap:16px; margin-top:36px;}
+  .hero-stats{display:flex; gap:40px; margin-top:56px; padding-top:32px; border-top:1px solid var(--line);}
+  .hero-stats div b{display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--navy); font-weight:500;}
+  .hero-stats div span{font-size:13px; color:var(--ink-soft);}
+
+  .hero-visual{
+    position:relative; height:520px;
+  }
+  .hero-panel{
+    position:absolute; inset:0;
+    background:var(--navy);
+    clip-path:polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    overflow:hidden;
+  }
+  .hero-panel video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0.55;
+  }
+  .hero-panel .veil{
+    position:absolute; inset:0; background:var(--navy); opacity:0.35;
+  }
+  .hero-panel .bracket{
+    position:absolute; right:-30px; top:50%; transform:translateY(-50%);
+    font-family:'Fraunces', serif; font-size:280px; color:rgba(242,115,44,0.22);
+    line-height:1; user-select:none;
+  }
+  .hero-photo{
+    position:absolute; left:0; bottom:34px; width:280px;
+    border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(7,20,39,0.35);
+    border:6px solid var(--white);
+    transform:rotate(-3deg);
+    transition:transform .4s ease;
+  }
+  .hero-photo:hover{transform:rotate(0deg) translateY(-4px);}
+  .hero-photo img{height:200px; width:100%; object-fit:cover;}
+  .hero-dot{
+    position:absolute; width:14px; height:14px; border-radius:50%; background:var(--orange);
+    top:60px; right:60px;
+  }
+
+  /* ---------- marquee strip ---------- */
+  .strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 0; background:var(--cream);
+  }
+  .strip .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;}
+  .strip span{font-size:14px; color:var(--ink-soft);}
+  .strip strong{color:var(--navy); font-weight:500;}
+
+  /* ---------- section heading ---------- */
+  .section-head{max-width:600px; margin-bottom:56px;}
+  .section-head h2{font-size:36px; margin-top:12px;}
+  .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+
+  /* ---------- services ---------- */
+  .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .service-card{
+    border:1px solid var(--line); border-radius:16px; padding:36px 30px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    background:var(--white);
+  }
+  .service-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 28px 50px rgba(11,30,61,0.10);
+    border-color:var(--orange);
+  }
+  .service-num{
+    width:44px; height:44px; border-radius:10px; background:var(--navy);
+    color:var(--orange); display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:18px; margin-bottom:24px;
+  }
+  .service-card h3{font-size:21px; margin-bottom:12px;}
+  .service-card p{font-size:14.5px; margin-bottom:18px;}
+  .service-card ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .service-card li{font-size:13.5px; color:var(--ink-soft); padding-left:16px; position:relative;}
+  .service-card li::before{content:"—"; position:absolute; left:0; color:var(--orange);}
+  .service-link{display:inline-block; margin-top:22px; font-size:14px; color:var(--navy); font-weight:500; border-bottom:1px solid var(--orange); padding-bottom:2px;}
+
+  /* ---------- process ---------- */
+  .process{background:var(--navy); color:var(--white);}
+  .process .section-head h2, .process .section-head .eyebrow{color:var(--white);}
+  .process .section-head .eyebrow{color:var(--orange);}
+  .process .section-head p{color:rgba(255,255,255,0.65);}
+  .process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative;}
+  .process-row::before{
+    content:""; position:absolute; top:22px; left:6%; right:6%; height:1px;
+    background:var(--line-dark);
+  }
+  .process-step{padding:0 20px; position:relative;}
+  .process-step .step-num{
+    width:44px; height:44px; border-radius:50%; background:var(--navy-deep);
+    border:1px solid var(--orange); color:var(--orange); font-family:'Fraunces',serif;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    margin-bottom:26px; position:relative; z-index:2;
+  }
+  .process-step h3{color:var(--white); font-size:19px; margin-bottom:10px;}
+  .process-step p{color:rgba(255,255,255,0.62); font-size:14px;}
+
+  /* ---------- why us ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .why-item{background:var(--white); padding:34px 30px; transition:background .3s ease;}
+  .why-item:hover{background:var(--cream);}
+  .why-item h3{font-size:17px; margin-bottom:10px;}
+  .why-item p{font-size:14px;}
+
+  /* ---------- portfolio ---------- */
+  .work-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .work-card{
+    position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
+  }
+  .work-card img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .work-card:hover img{transform:scale(1.08);}
+  .work-overlay{
+    position:absolute; inset:0; display:flex; align-items:flex-end; padding:20px;
+    background:rgba(7,20,39,0.55);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .work-card:hover .work-overlay{opacity:1;}
+  .work-overlay div p{color:rgba(255,255,255,0.7); font-size:12.5px; margin-top:2px;}
+  .work-overlay div b{color:var(--white); font-family:'Fraunces',serif; font-weight:500; font-size:17px;}
+
+  /* ---------- quote ---------- */
+  .quote{background:var(--cream); text-align:center;}
+  .quote blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-size:30px; color:var(--navy);
+    max-width:760px; margin:0 auto; line-height:1.5;
+  }
+  .quote cite{display:block; margin-top:24px; font-style:normal; font-size:14px; color:var(--ink-soft);}
+
+  /* ---------- cta band ---------- */
+  .cta-band{
+    background:var(--navy); color:var(--white); border-radius:24px;
+    padding:64px 60px; display:flex; align-items:center; justify-content:space-between;
+    margin:0 40px; gap:24px; flex-wrap:wrap;
+    position:relative; overflow:hidden;
+  }
+  .cta-band::after{
+    content:""; position:absolute; right:0; top:0; width:6px; height:100%;
+    background:var(--orange);
+  }
+  .cta-band h2{color:var(--white); font-size:32px; max-width:420px; position:relative;}
+  .cta-band .cta-actions{display:flex; gap:14px; position:relative;}
+
+  /* ---------- footer ---------- */
+  footer{padding:70px 0 40px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:40px; border-bottom:1px solid var(--line);}
+  .footer-grid h4{font-size:14px; color:var(--navy); margin-bottom:18px; font-weight:500;}
+  .footer-grid ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .footer-grid a{font-size:14px; color:var(--ink-soft); transition:color .2s ease;}
+  .footer-grid a:hover{color:var(--orange-deep);}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:24px; font-size:13px; color:var(--ink-soft); flex-wrap:wrap; gap:10px;}
+
+  /* ---------- about page ---------- */
+  .about-hero{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+    padding:90px 0 100px;
+  }
+  .about-hero img{border-radius:18px; height:440px; width:100%; object-fit:cover;}
+  .about-hero h1{font-size:44px;}
+  .about-hero p.lead{font-size:17px; margin-top:20px;}
+
+  .mission-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .mission-card{
+    border:1px solid var(--line); border-radius:16px; padding:38px;
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .mission-card:hover{border-color:var(--orange); transform:translateY(-6px);}
+  .mission-card .eyebrow{display:block; margin-bottom:14px;}
+  .mission-card p{font-size:15.5px; color:var(--ink);}
+
+  .values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .value-card{padding:26px 6px; border-top:2px solid var(--navy); transition:border-color .3s ease;}
+  .value-card:hover{border-color:var(--orange);}
+  .value-card h3{font-size:18px; margin-bottom:10px;}
+  .value-card p{font-size:13.5px;}
+
+  .culture-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:18px; height:520px;}
+  .culture-grid img{width:100%; height:100%; object-fit:cover; border-radius:14px; transition:transform .5s ease;}
+  .culture-grid .g1{grid-row:1 / 3;}
+  .culture-item{overflow:hidden; border-radius:14px;}
+  .culture-item:hover img{transform:scale(1.06);}
+
+  @media (max-width:900px){
+    nav.links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:60px;}
+    .hero-visual{height:360px; margin-top:20px;}
+    .hero h1{font-size:38px;}
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
+    .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
+    .about-hero{grid-template-columns:1fr;}
+    .cta-band{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+<style>
+  /* ---------- mobile nav ---------- */
+  .menu-toggle{
+    display:none; background:none; border:none; cursor:pointer; padding:6px;
+    flex-direction:column; justify-content:center; gap:5px; z-index:60;
+  }
+  .menu-toggle span{display:block; width:22px; height:2px; background:var(--navy); border-radius:2px; transition:all .25s ease;}
+  .mobile-overlay{
+    position:fixed; inset:0; background:rgba(7,20,39,0.45); z-index:190;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .mobile-overlay.show{opacity:1; pointer-events:auto;}
+  .mobile-drawer{
+    position:fixed; top:0; right:-300px; width:280px; max-width:82vw; height:100vh;
+    background:var(--white); z-index:200; box-shadow:-16px 0 50px rgba(7,20,39,0.18);
+    transition:right .35s cubic-bezier(.2,.7,.2,1);
+    padding:26px 26px 34px; display:flex; flex-direction:column;
+  }
+  .mobile-drawer.open{right:0;}
+  .drawer-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:30px;}
+  .drawer-close{background:none; border:none; font-size:24px; color:var(--ink-soft); cursor:pointer; line-height:1;}
+  .drawer-links{display:flex; flex-direction:column; gap:2px; margin-bottom:auto;}
+  .mobile-drawer .drawer-links a{
+    font-size:16px; color:var(--ink); padding:14px 4px; border-bottom:1px solid var(--line);
+  }
+  .mobile-drawer .drawer-links a.active{color:var(--orange-deep); font-weight:600;}
+  .mobile-drawer .btn{width:100%; justify-content:center; margin-top:24px;}
+
+  @media (max-width:900px){
+    .menu-toggle{display:flex;}
+    .navbar > .btn-primary{display:none;}
+  }
+</style>
+
+
+<style>
+  .ct-hero{padding:80px 0 20px;}
+  .ct-hero .section-head{max-width:600px;}
+
+  .ct-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:34px; padding:50px 0 110px; align-items:start;}
+
+  .ct-form{border:1px solid var(--line); border-radius:20px; padding:40px;}
+  .ct-form h3{font-size:20px; margin-bottom:26px;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:18px;}
+  .field label{font-size:13px; color:var(--ink); font-weight:500;}
+  .field input, .field select, .field textarea{
+    font-family:'Space Grotesk', sans-serif; font-size:14px; color:var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:12px 14px; outline:none;
+    background:var(--white); transition:border-color .25s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--orange);}
+  .field textarea{resize:vertical; min-height:120px; font-family:inherit;}
+  .field-error{
+    font-size:12.5px; color:#C23B2E; min-height:0; display:none;
+  }
+  .field.has-error input, .field.has-error select, .field.has-error textarea{
+    border-color:#C23B2E;
+  }
+  .field.has-error .field-error{display:block;}
+  .form-alert{
+    display:none; font-size:13.5px; color:#C23B2E; background:rgba(194,59,46,0.08);
+    border:1px solid rgba(194,59,46,0.25); border-radius:10px; padding:12px 14px; margin-bottom:16px;
+  }
+  .form-alert.show{display:block;}
+  .btn[disabled]{opacity:0.65; cursor:not-allowed; transform:none !important;}
+  .ct-form .btn{width:100%; justify-content:center; margin-top:6px;}
+  .ct-success{display:none; text-align:center; padding:40px 10px;}
+  .ct-success .icon{
+    width:52px; height:52px; border-radius:50%; background:var(--orange); color:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 18px;
+  }
+  .ct-success h3{font-size:20px; margin-bottom:10px;}
+
+  .ct-side{display:flex; flex-direction:column; gap:20px;}
+  .ct-card{border-radius:20px; padding:32px;}
+  .ct-card.dark{background:var(--navy); color:var(--white);}
+  .ct-card.dark h3{color:var(--white); font-size:18px; margin-bottom:20px;}
+  .ct-info-row{display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.14);}
+  .ct-info-row:last-child{border-bottom:none;}
+  .ct-info-row .ico{
+    width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--orange); font-size:15px;
+  }
+  .ct-info-row span{display:block; font-size:12px; color:rgba(255,255,255,0.55); margin-bottom:3px;}
+  .ct-info-row b{font-size:14.5px; font-weight:500; color:var(--white);}
+
+  .ct-card.light{border:1px solid var(--line);}
+  .ct-card.light h3{font-size:17px; margin-bottom:14px;}
+  .ct-card.light p{font-size:13.5px; margin-bottom:18px;}
+  .ct-socials{display:flex; gap:10px;}
+  .ct-socials a{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--ink);
+    transition:all .25s ease;
+  }
+  .ct-socials a:hover{background:var(--orange); border-color:var(--orange); color:var(--white); transform:translateY(-2px);}
+
+  @media (max-width:900px){
+    .ct-grid{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a class="btn btn-primary" href="#contactForm">Start a project</a>
+  </div>
+</header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-top">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="drawer-links">
+    <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html" class="active">Contact</a>
+  </div>
+  <a class="btn btn-primary" href="#contactForm">Start a project</a>
+</div>
+
+
+<section class="ct-hero">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Let's build something great together.</h2>
+      <p style="margin-top:14px; font-size:15px;">Tell us where your business is today and where you want it to be. We'll come back with a practical scope that fits your goals and budget.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0;">
+  <div class="wrap">
+    <div class="ct-grid">
+
+      <div class="ct-form reveal" id="contactForm">
+        <div id="formView">
+          <h3>Send us a message</h3>
+          <form id="ctForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="ctName">Full name</label>
+                <input type="text" id="ctName" placeholder="Your name" maxlength="80" autocomplete="name">
+                <span class="field-error" id="err-ctName"></span>
+              </div>
+              <div class="field">
+                <label for="ctEmail">Email</label>
+                <input type="email" id="ctEmail" placeholder="you@company.com" maxlength="120" autocomplete="email">
+                <span class="field-error" id="err-ctEmail"></span>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="ctPhone">Phone (optional)</label>
+                <input type="tel" id="ctPhone" placeholder="+254 7xx xxx xxx" maxlength="20" autocomplete="tel">
+                <span class="field-error" id="err-ctPhone"></span>
+              </div>
+              <div class="field">
+                <label for="ctService">I'm interested in</label>
+                <select id="ctService">
+                  <option value="" selected>Select a service</option>
+                  <option>Web &amp; mobile development</option>
+                  <option>Branding &amp; graphic design</option>
+                  <option>Social media &amp; digital marketing</option>
+                  <option>A mix of services</option>
+                  <option>Not sure yet</option>
+                </select>
+                <span class="field-error" id="err-ctService"></span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="ctBudget">Estimated budget</label>
+              <select id="ctBudget">
+                <option value="" selected>Select a range</option>
+                <option>Under KES 50,000</option>
+                <option>KES 50,000 – 150,000</option>
+                <option>KES 150,000 – 500,000</option>
+                <option>Above KES 500,000</option>
+                <option>Prefer to discuss</option>
+              </select>
+              <span class="field-error" id="err-ctBudget"></span>
+            </div>
+            <div class="field">
+              <label for="ctMessage">Tell us about your project</label>
+              <textarea id="ctMessage" placeholder="What are you trying to build, brand, or grow?" maxlength="1000"></textarea>
+              <span class="field-error" id="err-ctMessage"></span>
+            </div>
+            <div class="form-alert" id="formAlert"></div>
+            <button type="submit" class="btn btn-primary" id="ctSubmit">Send message →</button>
+          </form>
+        </div>
+
+        <div class="ct-success" id="successView">
+          <div class="icon">✓</div>
+          <h3>Message received</h3>
+          <p>Thanks for reaching out — we'll get back to you within one business day.</p>
+          <a class="btn btn-ghost" href="index.html" style="margin-top:20px; display:inline-flex;">Back to home</a>
+        </div>
+      </div>
+
+      <div class="ct-side">
+        <div class="ct-card dark reveal d1">
+          <h3>Contact details</h3>
+          <div class="ct-info-row">
+            <div class="ico">@</div>
+            <div><span>Email</span><b>hello@codeonbaiti.com</b></div>
+          </div>
+          <div class="ct-info-row">
+            <div class="ico">T</div>
+            <div><span>Phone</span><b>+254 700 000 000</b></div>
+          </div>
+          <div class="ct-info-row">
+            <div class="ico">W</div>
+            <div><span>Website</span><b>www.codeonbaiti.com</b></div>
+          </div>
+          <div class="ct-info-row">
+            <div class="ico">S</div>
+            <div><span>Social</span><b>@codeonbaiti</b></div>
+          </div>
+        </div>
+
+        <div class="ct-card light reveal d2">
+          <h3>Prefer to talk it through?</h3>
+          <p>Reach out directly and we'll set up a short call to understand your goals before proposing a scope.</p>
+          <a class="btn btn-primary" href="mailto:hello@codeonbaiti.com" style="width:100%; justify-content:center;">Email us directly</a>
+        </div>
+
+        <div class="ct-card light reveal d3">
+          <h3>Follow along</h3>
+          <p>See recent work and behind-the-scenes on social.</p>
+          <div class="ct-socials">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="X / Twitter">X</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+        <p style="margin-top:16px; font-size:14px; max-width:260px;">Digital · Creative · Growth. Practical solutions for businesses, organizations and individuals.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html#pillar-1">Web &amp; mobile</a></li>
+          <li><a href="services.html#pillar-2">Branding &amp; design</a></li>
+          <li><a href="services.html#pillar-3">Social &amp; marketing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="gifts.html">Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@codeonbaiti.com">hello@codeonbaiti.com</a></li>
+          <li><a href="#">+254 700 000 000</a></li>
+          <li><a href="#">@codeonbaiti</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© CodeOnBaiti Media</span>
+      <span>Design preview — not final code</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('ctForm');
+  const submitBtn = document.getElementById('ctSubmit');
+  const alertBox = document.getElementById('formAlert');
+
+  const fields = {
+    ctName:   { el: document.getElementById('ctName'),   errEl: document.getElementById('err-ctName') },
+    ctEmail:  { el: document.getElementById('ctEmail'),  errEl: document.getElementById('err-ctEmail') },
+    ctPhone:  { el: document.getElementById('ctPhone'),  errEl: document.getElementById('err-ctPhone') },
+    ctService:{ el: document.getElementById('ctService'),errEl: document.getElementById('err-ctService') },
+    ctBudget: { el: document.getElementById('ctBudget'), errEl: document.getElementById('err-ctBudget') },
+    ctMessage:{ el: document.getElementById('ctMessage'),errEl: document.getElementById('err-ctMessage') },
+  };
+
+  function setError(key, message){
+    const { el, errEl } = fields[key];
+    el.closest('.field').classList.add('has-error');
+    errEl.textContent = message;
+  }
+  function clearError(key){
+    const { el, errEl } = fields[key];
+    el.closest('.field').classList.remove('has-error');
+    errEl.textContent = '';
+  }
+
+  // Basic RFC-5322-ish email check — good enough for client-side validation.
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Accepts +, digits, spaces, dashes, parentheses — requires at least 7 digits total.
+  const PHONE_RE = /^[+()\-\s0-9]+$/;
+
+  function validate(){
+    let firstInvalid = null;
+    Object.keys(fields).forEach(clearError);
+    alertBox.classList.remove('show');
+
+    const name = fields.ctName.el.value.trim();
+    if (!name){
+      setError('ctName', 'Please enter your name.');
+      firstInvalid = firstInvalid || fields.ctName.el;
+    } else if (name.length < 2){
+      setError('ctName', 'Name looks too short.');
+      firstInvalid = firstInvalid || fields.ctName.el;
+    } else if (!/[a-zA-Z]/.test(name)){
+      setError('ctName', 'Please enter a valid name.');
+      firstInvalid = firstInvalid || fields.ctName.el;
+    }
+
+    const email = fields.ctEmail.el.value.trim();
+    if (!email){
+      setError('ctEmail', 'Please enter your email.');
+      firstInvalid = firstInvalid || fields.ctEmail.el;
+    } else if (!EMAIL_RE.test(email)){
+      setError('ctEmail', 'Please enter a valid email address.');
+      firstInvalid = firstInvalid || fields.ctEmail.el;
+    }
+
+    const phone = fields.ctPhone.el.value.trim();
+    if (phone){
+      const digitCount = (phone.match(/\d/g) || []).length;
+      if (!PHONE_RE.test(phone) || digitCount < 7){
+        setError('ctPhone', 'Please enter a valid phone number, or leave it blank.');
+        firstInvalid = firstInvalid || fields.ctPhone.el;
+      }
+    }
+
+    if (!fields.ctService.el.value){
+      setError('ctService', 'Please choose what you\'re interested in.');
+      firstInvalid = firstInvalid || fields.ctService.el;
+    }
+
+    if (!fields.ctBudget.el.value){
+      setError('ctBudget', 'Please choose an estimated budget.');
+      firstInvalid = firstInvalid || fields.ctBudget.el;
+    }
+
+    const message = fields.ctMessage.el.value.trim();
+    if (!message){
+      setError('ctMessage', 'Please tell us a little about your project.');
+      firstInvalid = firstInvalid || fields.ctMessage.el;
+    } else if (message.length < 10){
+      setError('ctMessage', 'A few more details would help (at least 10 characters).');
+      firstInvalid = firstInvalid || fields.ctMessage.el;
+    } else if (message.length > 1000){
+      setError('ctMessage', 'Please keep this under 1000 characters.');
+      firstInvalid = firstInvalid || fields.ctMessage.el;
+    }
+
+    return firstInvalid;
+  }
+
+  // Clear a field's error as soon as the person starts fixing it.
+  Object.keys(fields).forEach(key => {
+    const { el } = fields[key];
+    const evt = (el.tagName === 'SELECT') ? 'change' : 'input';
+    el.addEventListener(evt, () => clearError(key));
+  });
+
+  let submitting = false;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (submitting) return;
+
+    const firstInvalid = validate();
+    if (firstInvalid){
+      alertBox.textContent = 'Please fix the highlighted fields before sending.';
+      alertBox.classList.add('show');
+      firstInvalid.focus();
+      return;
+    }
+
+    submitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    // No backend is wired up yet — this simulates a send so the flow can be previewed end to end.
+    setTimeout(() => {
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+      submitting = false;
+    }, 700);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+</script>
+
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var drawer = document.getElementById('mobileDrawer');
+    var overlay = document.getElementById('mobileOverlay');
+    var closeBtn = document.getElementById('drawerClose');
+    if(!toggle || !drawer || !overlay) return;
+    function openDrawer(){
+      drawer.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeDrawer);
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CodeOnBaiti Media — design preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3D;
+    --navy-deep:#071427;
+    --orange:#F2732C;
+    --orange-deep:#D85A18;
+    --white:#FFFFFF;
+    --cream:#FFFFFF;
+    --ink:#12203B;
+    --ink-soft:#57647E;
+    --line:#E3E1D9;
+    --line-dark:rgba(255,255,255,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0; color:var(--ink-soft); line-height:1.7;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+  section{padding:112px 0;}
+  .eyebrow{
+    font-size:14px; color:var(--orange-deep); font-weight:500;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+  .reveal.d1{transition-delay:.08s;}
+  .reveal.d2{transition-delay:.16s;}
+  .reveal.d3{transition-delay:.24s;}
+  .reveal.d4{transition-delay:.32s;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 40px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px;
+    color:var(--navy);
+  }
+  .logo span{color:var(--orange);}
+  nav.links{display:flex; align-items:center; gap:36px;}
+  nav.links a{
+    font-size:15px; color:var(--ink); position:relative; padding:4px 0; cursor:pointer;
+  }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--orange); transition:width .3s ease;
+  }
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  nav.links a.active{color:var(--navy); font-weight:500;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-size:14px; font-weight:500;
+    cursor:pointer; border:1px solid transparent; transition:all .25s ease;
+  }
+  .btn-primary{background:var(--orange); color:var(--white);}
+  .btn-primary:hover{background:var(--orange-deep); transform:translateY(-2px);}
+  .btn-ghost{background:transparent; color:var(--navy); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-outline-light{background:transparent; color:var(--white); border:1px solid var(--line-dark);}
+  .btn-outline-light:hover{border-color:var(--orange); color:var(--orange);}
+
+  /* ---------- gifts / printed products ---------- */
+  .gift-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .gift-card{
+    display:block; background:var(--white); border:1px dashed var(--line); border-radius:16px;
+    padding:26px 20px; text-align:center;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .gift-card:hover{
+    transform:translateY(-6px) rotate(-1deg);
+    border-color:var(--orange); border-style:solid;
+    box-shadow:0 20px 40px rgba(11,30,61,0.08);
+  }
+  .gift-icon{
+    width:34px; height:34px; margin:0 auto 14px; color:var(--orange-deep);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .gift-icon svg{width:100%; height:100%;}
+  .gift-card h3{font-size:15.5px; margin-bottom:6px;}
+  .gift-card p{font-size:12.5px;}
+
+  /* ---------- intro splash ---------- */
+  #splash{
+    position:fixed; inset:0; z-index:9999; background:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .6s ease;
+  }
+  #splash.hide{opacity:0; pointer-events:none;}
+  #splash video{width:min(440px, 70vw); height:auto; mix-blend-mode:multiply;}
+  #splash .splash-skip{
+    position:absolute; bottom:32px; right:36px; font-size:13px; color:var(--ink-soft);
+    cursor:pointer; border:1px solid var(--line); padding:9px 18px; border-radius:999px;
+    transition:all .25s ease; background:var(--white);
+  }
+  #splash .splash-skip:hover{border-color:var(--orange); color:var(--orange-deep);}
+  body.splash-active{overflow:hidden;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center;
+    max-width:1180px; margin:0 auto; padding:96px 40px 100px;
+    gap:40px;
+  }
+  .hero h1{font-size:52px; max-width:560px;}
+  .hero h1 em{font-style:italic; color:var(--orange-deep);}
+  .hero p.lead{font-size:18px; max-width:460px; margin-top:22px;}
+  .hero-cta{display:flex; gap:16px; margin-top:36px;}
+  .hero-stats{display:flex; gap:40px; margin-top:56px; padding-top:32px; border-top:1px solid var(--line);}
+  .hero-stats div b{display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--navy); font-weight:500;}
+  .hero-stats div span{font-size:13px; color:var(--ink-soft);}
+
+  .hero-visual{
+    position:relative; height:520px;
+  }
+  .hero-panel{
+    position:absolute; inset:0;
+    background:var(--navy);
+    clip-path:polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    overflow:hidden;
+  }
+  .hero-panel video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0.55;
+  }
+  .hero-panel .veil{
+    position:absolute; inset:0; background:var(--navy); opacity:0.35;
+  }
+  .hero-panel .bracket{
+    position:absolute; right:-30px; top:50%; transform:translateY(-50%);
+    font-family:'Fraunces', serif; font-size:280px; color:rgba(242,115,44,0.22);
+    line-height:1; user-select:none;
+  }
+  .hero-photo{
+    position:absolute; left:0; bottom:34px; width:280px;
+    border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(7,20,39,0.35);
+    border:6px solid var(--white);
+    transform:rotate(-3deg);
+    transition:transform .4s ease;
+  }
+  .hero-photo:hover{transform:rotate(0deg) translateY(-4px);}
+  .hero-photo img{height:200px; width:100%; object-fit:cover;}
+  .hero-dot{
+    position:absolute; width:14px; height:14px; border-radius:50%; background:var(--orange);
+    top:60px; right:60px;
+  }
+
+  /* ---------- marquee strip ---------- */
+  .strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 0; background:var(--cream);
+  }
+  .strip .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;}
+  .strip span{font-size:14px; color:var(--ink-soft);}
+  .strip strong{color:var(--navy); font-weight:500;}
+
+  /* ---------- section heading ---------- */
+  .section-head{max-width:600px; margin-bottom:56px;}
+  .section-head h2{font-size:36px; margin-top:12px;}
+  .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+
+  /* ---------- services ---------- */
+  .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .service-card{
+    display:block;
+    border:1px solid var(--line); border-radius:16px; padding:36px 30px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    background:var(--white);
+  }
+  .service-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 28px 50px rgba(11,30,61,0.10);
+    border-color:var(--orange);
+  }
+  .service-num{
+    width:44px; height:44px; border-radius:10px; background:var(--navy);
+    color:var(--orange); display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:18px; margin-bottom:24px;
+  }
+  .mini-pillar{font-size:12px; color:var(--orange-deep); font-weight:600; letter-spacing:0.06em; display:block; margin-bottom:8px;}
+  .service-card h3{font-size:21px; margin-bottom:12px;}
+  .service-card p{font-size:14.5px; margin-bottom:18px;}
+  .service-card ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .service-card li{font-size:13.5px; color:var(--ink-soft); padding-left:16px; position:relative;}
+  .service-card li::before{content:"—"; position:absolute; left:0; color:var(--orange);}
+  .service-link{display:inline-block; margin-top:22px; font-size:14px; color:var(--navy); font-weight:500; border-bottom:1px solid var(--orange); padding-bottom:2px;}
+
+  /* ---------- process ---------- */
+  .process{background:var(--navy); color:var(--white);}
+  .process .section-head h2, .process .section-head .eyebrow{color:var(--white);}
+  .process .section-head .eyebrow{color:var(--orange);}
+  .process .section-head p{color:rgba(255,255,255,0.65);}
+  .process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative;}
+  .process-row::before{
+    content:""; position:absolute; top:22px; left:6%; right:6%; height:1px;
+    background:var(--line-dark);
+  }
+  .process-step{padding:0 20px; position:relative;}
+  .process-step .step-num{
+    width:44px; height:44px; border-radius:50%; background:var(--navy-deep);
+    border:1px solid var(--orange); color:var(--orange); font-family:'Fraunces',serif;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    margin-bottom:26px; position:relative; z-index:2;
+  }
+  .process-step h3{color:var(--white); font-size:19px; margin-bottom:10px;}
+  .process-step p{color:rgba(255,255,255,0.62); font-size:14px;}
+
+  /* ---------- why us ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .why-item{background:var(--white); padding:34px 30px; transition:background .3s ease;}
+  .why-item:hover{background:var(--cream);}
+  .why-item h3{font-size:17px; margin-bottom:10px;}
+  .why-item p{font-size:14px;}
+
+  /* ---------- portfolio ---------- */
+  .work-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .work-card{
+    position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
+  }
+  .work-card img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .work-card:hover img{transform:scale(1.08);}
+  .work-overlay{
+    position:absolute; inset:0; display:flex; align-items:flex-end; padding:20px;
+    background:rgba(7,20,39,0.55);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .work-card:hover .work-overlay{opacity:1;}
+  .work-overlay div p{color:rgba(255,255,255,0.7); font-size:12.5px; margin-top:2px;}
+  .work-overlay div b{color:var(--white); font-family:'Fraunces',serif; font-weight:500; font-size:17px;}
+
+  /* ---------- quote ---------- */
+  .quote{background:var(--cream); text-align:center;}
+  .quote blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-size:30px; color:var(--navy);
+    max-width:760px; margin:0 auto; line-height:1.5;
+  }
+  .quote cite{display:block; margin-top:24px; font-style:normal; font-size:14px; color:var(--ink-soft);}
+
+  /* ---------- cta band ---------- */
+  .cta-band{
+    background:var(--navy); color:var(--white); border-radius:24px;
+    padding:64px 60px; display:flex; align-items:center; justify-content:space-between;
+    margin:0 40px; gap:24px; flex-wrap:wrap;
+    position:relative; overflow:hidden;
+  }
+  .cta-band::after{
+    content:""; position:absolute; right:0; top:0; width:6px; height:100%;
+    background:var(--orange);
+  }
+  .cta-band h2{color:var(--white); font-size:32px; max-width:420px; position:relative;}
+  .cta-band .cta-actions{display:flex; gap:14px; position:relative;}
+
+  /* ---------- footer ---------- */
+  footer{padding:70px 0 40px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:40px; border-bottom:1px solid var(--line);}
+  .footer-grid h4{font-size:14px; color:var(--navy); margin-bottom:18px; font-weight:500;}
+  .footer-grid ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .footer-grid a{font-size:14px; color:var(--ink-soft); transition:color .2s ease;}
+  .footer-grid a:hover{color:var(--orange-deep);}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:24px; font-size:13px; color:var(--ink-soft); flex-wrap:wrap; gap:10px;}
+
+  /* ---------- about page ---------- */
+  .about-hero{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+    padding:90px 0 100px;
+  }
+  .about-hero img{border-radius:18px; height:440px; width:100%; object-fit:cover;}
+  .about-hero h1{font-size:44px;}
+  .about-hero p.lead{font-size:17px; margin-top:20px;}
+
+  .mission-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .mission-card{
+    border:1px solid var(--line); border-radius:16px; padding:38px;
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .mission-card:hover{border-color:var(--orange); transform:translateY(-6px);}
+  .mission-card .eyebrow{display:block; margin-bottom:14px;}
+  .mission-card p{font-size:15.5px; color:var(--ink);}
+
+  .values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .value-card{padding:26px 6px; border-top:2px solid var(--navy); transition:border-color .3s ease;}
+  .value-card:hover{border-color:var(--orange);}
+  .value-card h3{font-size:18px; margin-bottom:10px;}
+  .value-card p{font-size:13.5px;}
+
+  .culture-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:18px; height:520px;}
+  .culture-grid img{width:100%; height:100%; object-fit:cover; border-radius:14px; transition:transform .5s ease;}
+  .culture-grid .g1{grid-row:1 / 3;}
+  .culture-item{overflow:hidden; border-radius:14px;}
+  .culture-item:hover img{transform:scale(1.06);}
+
+  @media (max-width:900px){
+    nav.links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:60px;}
+    .hero-visual{height:360px; margin-top:20px;}
+    .hero h1{font-size:38px;}
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
+    .gift-grid{grid-template-columns:1fr 1fr;}
+    .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
+    .about-hero{grid-template-columns:1fr;}
+    .cta-band{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+<style>
+  /* ---------- mobile nav ---------- */
+  .menu-toggle{
+    display:none; background:none; border:none; cursor:pointer; padding:6px;
+    flex-direction:column; justify-content:center; gap:5px; z-index:60;
+  }
+  .menu-toggle span{display:block; width:22px; height:2px; background:var(--navy); border-radius:2px; transition:all .25s ease;}
+  .mobile-overlay{
+    position:fixed; inset:0; background:rgba(7,20,39,0.45); z-index:190;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .mobile-overlay.show{opacity:1; pointer-events:auto;}
+  .mobile-drawer{
+    position:fixed; top:0; right:-300px; width:280px; max-width:82vw; height:100vh;
+    background:var(--white); z-index:200; box-shadow:-16px 0 50px rgba(7,20,39,0.18);
+    transition:right .35s cubic-bezier(.2,.7,.2,1);
+    padding:26px 26px 34px; display:flex; flex-direction:column;
+  }
+  .mobile-drawer.open{right:0;}
+  .drawer-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:30px;}
+  .drawer-close{background:none; border:none; font-size:24px; color:var(--ink-soft); cursor:pointer; line-height:1;}
+  .drawer-links{display:flex; flex-direction:column; gap:2px; margin-bottom:auto;}
+  .mobile-drawer .drawer-links a{
+    font-size:16px; color:var(--ink); padding:14px 4px; border-bottom:1px solid var(--line);
+  }
+  .mobile-drawer .drawer-links a.active{color:var(--orange-deep); font-weight:600;}
+  .mobile-drawer .btn{width:100%; justify-content:center; margin-top:24px;}
+
+  @media (max-width:900px){
+    .menu-toggle{display:flex;}
+    .navbar > .btn-primary{display:none;}
+  }
+</style>
+
+</head>
+<body>
+
+<div id="splash">
+  <video id="splashVideo" autoplay muted playsinline>
+    <source src="codeonbaiti-animation-white-bg.mp4" type="video/mp4">
+  </video>
+  <span class="splash-skip" id="splashSkip">Skip →</span>
+</div>
+<script>
+  (function(){
+    var splash = document.getElementById('splash');
+    if(!splash) return;
+    if(sessionStorage.getItem('cob_intro_seen')){
+      splash.remove();
+      return;
+    }
+    document.body.classList.add('splash-active');
+    var video = document.getElementById('splashVideo');
+    var done = false;
+    function finish(){
+      if(done) return;
+      done = true;
+      sessionStorage.setItem('cob_intro_seen', '1');
+      splash.classList.add('hide');
+      document.body.classList.remove('splash-active');
+      setTimeout(function(){ splash.remove(); }, 650);
+    }
+    video.addEventListener('ended', finish);
+    video.addEventListener('error', finish);
+    document.getElementById('splashSkip').addEventListener('click', finish);
+    // safety net in case the video can't play for some reason
+    setTimeout(finish, 6000);
+  })();
+</script>
+
+<header>
+  <div class="navbar">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <nav class="links">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a class="btn btn-primary" href="contact.html">Start a project</a>
+  </div>
+</header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-top">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="drawer-links">
+    <a href="index.html" class="active">Home</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html">Contact</a>
+  </div>
+  <a class="btn btn-primary" href="contact.html">Start a project</a>
+</div>
+
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-text reveal visible">
+      <p class="eyebrow">Web · Branding · Social media</p>
+      <h1>Digital presence that makes people <em>stop scrolling.</em></h1>
+      <p class="lead">CodeOnBaiti Media builds websites, brand identities and social campaigns for businesses, institutions and individuals who are ready to be taken seriously online.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="contact.html">Start a project</a>
+        <a class="btn btn-ghost" href="#work">See our work</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>3</b><span>Service pillars</span></div>
+        <div><b>20+</b><span>Deliverable types</span></div>
+        <div><b>1</b><span>Accountable team</span></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal d2 visible">
+      <div class="hero-panel">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80">
+          <source src="https://assets.mixkit.co/videos/41654/41654-360.mp4" type="video/mp4">
+        </video>
+        <div class="veil"></div>
+        <span class="bracket">&lt;/&gt;</span>
+      </div>
+      <span class="hero-dot"></span>
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=500&q=80" alt="Designer working on a laptop" />
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <span>Who we work with</span>
+      <span><strong>Startups</strong> · <strong>SMEs</strong> · <strong>Organizations</strong> · <strong>Institutions</strong> · <strong>Individuals</strong></span>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">What we do</p>
+        <h2>Three pillars, one accountable team.</h2>
+        <p style="margin-top:16px; font-size:15.5px; max-width:560px;">Everything we do sits under one simple slogan — <strong style="color:var(--navy); font-weight:600;">Build, Brand, Grow</strong>. We build the product, brand it so people remember it, then grow it in front of the right audience. Click a pillar below to see that work in our portfolio.</p>
+      </div>
+      <div class="services-grid">
+        <a class="service-card reveal d1" href="portfolio.html?filter=build">
+          <div class="service-num">01</div>
+          <span class="mini-pillar">BUILD</span>
+          <h3>Web &amp; mobile development</h3>
+          <p>Responsive websites, web apps and mobile apps that are easy to use and aligned with your brand.</p>
+          <ul>
+            <li>Business &amp; institutional websites</li>
+            <li>Customer &amp; booking systems</li>
+            <li>Android &amp; cross-platform apps</li>
+          </ul>
+          <span class="service-link">View build projects →</span>
+        </a>
+        <a class="service-card reveal d2" href="portfolio.html?filter=brand">
+          <div class="service-num">02</div>
+          <span class="mini-pillar">BRAND</span>
+          <h3>Branding &amp; graphic design</h3>
+          <p>Logos and identity systems that make a business recognizable across every platform.</p>
+          <ul>
+            <li>Logo &amp; brand identity</li>
+            <li>Brand guidelines &amp; assets</li>
+            <li>Print &amp; marketing materials</li>
+          </ul>
+          <span class="service-link">View brand projects →</span>
+        </a>
+        <a class="service-card reveal d3" href="portfolio.html?filter=grow">
+          <div class="service-num">03</div>
+          <span class="mini-pillar">GROW</span>
+          <h3>Social &amp; digital marketing</h3>
+          <p>Content, strategy and paid campaign support that grows audience and leads.</p>
+          <ul>
+            <li>Account management</li>
+            <li>Content planning &amp; creation</li>
+            <li>Campaign &amp; performance reporting</li>
+          </ul>
+          <span class="service-link">View grow projects →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How we work</p>
+        <h2>Every project starts with a conversation, not a template.</h2>
+      </div>
+      <div class="process-row">
+        <div class="process-step reveal d1"><div class="step-num">1</div><h3>Discover</h3><p>Business goal, audience and current gaps — before any design or code.</p></div>
+        <div class="process-step reveal d2"><div class="step-num">2</div><h3>Plan</h3><p>Scope, structure and timelines agreed up front, matched to your budget.</p></div>
+        <div class="process-step reveal d3"><div class="step-num">3</div><h3>Design &amp; build</h3><p>Brand-aligned design and clean development, reviewed at every milestone.</p></div>
+        <div class="process-step reveal d4"><div class="step-num">4</div><h3>Launch &amp; grow</h3><p>Deployment, training and ongoing content or campaign support.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Why CodeOnBaiti</p>
+        <h2>Practical, not decorative.</h2>
+      </div>
+      <div class="why-grid reveal">
+        <div class="why-item"><h3>One team, three pillars</h3><p>No gaps between the people who build and the people who market.</p></div>
+        <div class="why-item"><h3>Built around your budget</h3><p>Solutions scoped to your stage of growth.</p></div>
+        <div class="why-item"><h3>Brand consistency by default</h3><p>One colour system, typography and voice across web, print and social.</p></div>
+        <div class="why-item"><h3>Support after launch</h3><p>Maintenance, updates and performance reporting keep the work alive.</p></div>
+        <div class="why-item"><h3>Clear communication</h3><p>Defined milestones and plain-language updates, no surprises.</p></div>
+        <div class="why-item"><h3>Designed to do a job</h3><p>We design for clarity and conversion, not decoration.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Selected work</p>
+        <h2>A few things we'd love to walk you through.</h2>
+      </div>
+      <div class="work-grid">
+        <div class="work-card reveal d1">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=500&q=80" alt="Website design mockup" />
+          <div class="work-overlay"><div><b>Business website</b><p>Web development</p></div></div>
+        </div>
+        <div class="work-card reveal d2">
+          <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=500&q=80" alt="Brand identity mockup" />
+          <div class="work-overlay"><div><b>Brand identity</b><p>Branding &amp; design</p></div></div>
+        </div>
+        <div class="work-card reveal d3">
+          <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=500&q=80" alt="Social media content grid" />
+          <div class="work-overlay"><div><b>Campaign content</b><p>Social media</p></div></div>
+        </div>
+        <div class="work-card reveal d4">
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80" alt="Team reviewing a design" />
+          <div class="work-overlay"><div><b>Dashboard system</b><p>Web application</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gifts" style="background:var(--cream);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Beyond the screen</p>
+        <h2>We make things you can actually hold, too.</h2>
+        <p style="margin-top:14px; font-size:15px; max-width:560px;">A workplace that feels good, feels good to work in. Alongside web, brand and social work, we design and produce printed and branded pieces you can gift to your team — or simply keep for yourself.</p>
+      </div>
+
+      <div class="gift-grid">
+        <a class="gift-card reveal d1" href="gifts.html#corporate-gifts"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1.5"/><path d="M3 12h18"/><path d="M12 8v13"/><path d="M12 8c-1.5-3.5-6-4-6-1.2C6 8.5 8 8 12 8Z"/><path d="M12 8c1.5-3.5 6-4 6-1.2C18 8.5 16 8 12 8Z"/></svg></span><h3>Boardroom Favorites</h3><p>Branded gift sets for clients, partners and staff.</p></a>
+        <a class="gift-card reveal d1" href="gifts.html#motivation-jars"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3H9z"/><path d="M8 6h8l1 3v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9Z"/><path d="M7.5 12h9"/></svg></span><h3>Motivation Jars</h3><p>Desk jars with prompts that lift team morale.</p></a>
+        <a class="gift-card reveal d2" href="gifts.html#planners"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 10h17"/><path d="M8 14h2"/><path d="M14 14h2"/><path d="M8 17h2"/></svg></span><h3>Plan Like a Pro</h3><p>Branded planners for teams and personal use.</p></a>
+        <a class="gift-card reveal d2" href="gifts.html#journals"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h11a2 2 0 0 1 2 2v13a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V4Z"/><path d="M6 4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2"/><path d="M9 8h6"/><path d="M9 11.5h6"/></svg></span><h3>Journals &amp; Notebooks</h3><p>Custom journals designed around your brand.</p></a>
+        <a class="gift-card reveal d3" href="gifts.html#apparel"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4 4 7l2 3 2-1.2V20h8V8.8L18 10l2-3-4-3-2 2h-4Z"/></svg></span><h3>Wear Your Brand</h3><p>Shirts and merch people actually want to wear.</p></a>
+        <a class="gift-card reveal d3" href="gifts.html#bookmarks"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10a1 1 0 0 1 1 1v16l-6-4-6 4V4a1 1 0 0 1 1-1Z"/></svg></span><h3>Little Bookmarks</h3><p>Small, thoughtful branded keepsakes.</p></a>
+        <a class="gift-card reveal d4" href="gifts.html#accountability-boxes"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8.5" width="14" height="10" rx="1.5"/><path d="M7 8.5V6a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v9"/><path d="M9 13h6"/><path d="M9 15.5h4"/></svg></span><h3>Accountability Card Boxes</h3><p>Card sets and boxes that build daily habits.</p></a>
+        <a class="gift-card reveal d4" href="gifts.html#photo-books"><span class="gift-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.2"/></svg></span><h3>Photo Books</h3><p>Printed photo books for events and milestones.</p></a>
+      </div>
+
+      <div class="reveal" style="margin-top:36px; text-align:center; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="gifts.html">Browse the gift shop →</a>
+        <a class="btn btn-ghost" href="contact.html">Ask about something custom</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="wrap reveal">
+      <blockquote>"We believe digital services should solve real business problems — technology, creativity, branding and marketing, combined into one practical solution."</blockquote>
+      <cite>— CodeOnBaiti Media</cite>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="cta-band reveal">
+      <h2>Tell us where your business is today, and where you want it to be.</h2>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="mailto:hello@codeonbaiti.com">Email hello@codeonbaiti.com</a>
+        <a class="btn btn-outline-light" href="#">+254 700 000 000</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+        <p style="margin-top:16px; font-size:14px; max-width:260px;">Digital · Creative · Growth. Practical solutions for businesses, organizations and individuals.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Web &amp; mobile</a></li>
+          <li><a href="#services">Branding &amp; design</a></li>
+          <li><a href="#services">Social &amp; marketing</a></li>
+          <li><a href="gifts.html">Printed gifts &amp; merch</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="gifts.html">Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@codeonbaiti.com">hello@codeonbaiti.com</a></li>
+          <li><a href="#">+254 700 000 000</a></li>
+          <li><a href="#">@codeonbaiti</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© CodeOnBaiti Media</span>
+      <span>Design preview — not final code</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // active nav highlight while scrolling
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav.links a');
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+      }
+    });
+  }, {threshold:0.5});
+  sections.forEach(s => navIO.observe(s));
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+</script>
+
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var drawer = document.getElementById('mobileDrawer');
+    var overlay = document.getElementById('mobileOverlay');
+    var closeBtn = document.getElementById('drawerClose');
+    if(!toggle || !drawer || !overlay) return;
+    function openDrawer(){
+      drawer.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeDrawer);
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services — CodeOnBaiti Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3D;
+    --navy-deep:#071427;
+    --orange:#F2732C;
+    --orange-deep:#D85A18;
+    --white:#FFFFFF;
+    --cream:#FFFFFF;
+    --ink:#12203B;
+    --ink-soft:#57647E;
+    --line:#E3E1D9;
+    --line-dark:rgba(255,255,255,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0; color:var(--ink-soft); line-height:1.7;}
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+  section{padding:112px 0;}
+  .eyebrow{
+    font-size:14px; color:var(--orange-deep); font-weight:500;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+  .reveal.d1{transition-delay:.08s;}
+  .reveal.d2{transition-delay:.16s;}
+  .reveal.d3{transition-delay:.24s;}
+  .reveal.d4{transition-delay:.32s;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 40px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px;
+    color:var(--navy);
+  }
+  .logo span{color:var(--orange);}
+  nav.links{display:flex; align-items:center; gap:36px;}
+  nav.links a{
+    font-size:15px; color:var(--ink); position:relative; padding:4px 0; cursor:pointer;
+  }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--orange); transition:width .3s ease;
+  }
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  nav.links a.active{color:var(--navy); font-weight:500;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; border-radius:999px; font-size:14px; font-weight:500;
+    cursor:pointer; border:1px solid transparent; transition:all .25s ease;
+  }
+  .btn-primary{background:var(--orange); color:var(--white);}
+  .btn-primary:hover{background:var(--orange-deep); transform:translateY(-2px);}
+  .btn-ghost{background:transparent; color:var(--navy); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);}
+  .btn-outline-light{background:transparent; color:var(--white); border:1px solid var(--line-dark);}
+  .btn-outline-light:hover{border-color:var(--orange); color:var(--orange);}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center;
+    max-width:1180px; margin:0 auto; padding:96px 40px 100px;
+    gap:40px;
+  }
+  .hero h1{font-size:52px; max-width:560px;}
+  .hero h1 em{font-style:italic; color:var(--orange-deep);}
+  .hero p.lead{font-size:18px; max-width:460px; margin-top:22px;}
+  .hero-cta{display:flex; gap:16px; margin-top:36px;}
+  .hero-stats{display:flex; gap:40px; margin-top:56px; padding-top:32px; border-top:1px solid var(--line);}
+  .hero-stats div b{display:block; font-family:'Fraunces',serif; font-size:28px; color:var(--navy); font-weight:500;}
+  .hero-stats div span{font-size:13px; color:var(--ink-soft);}
+
+  .hero-visual{
+    position:relative; height:520px;
+  }
+  .hero-panel{
+    position:absolute; inset:0;
+    background:var(--navy);
+    clip-path:polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    overflow:hidden;
+  }
+  .hero-panel video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0.55;
+  }
+  .hero-panel .veil{
+    position:absolute; inset:0; background:var(--navy); opacity:0.35;
+  }
+  .hero-panel .bracket{
+    position:absolute; right:-30px; top:50%; transform:translateY(-50%);
+    font-family:'Fraunces', serif; font-size:280px; color:rgba(242,115,44,0.22);
+    line-height:1; user-select:none;
+  }
+  .hero-photo{
+    position:absolute; left:0; bottom:34px; width:280px;
+    border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(7,20,39,0.35);
+    border:6px solid var(--white);
+    transform:rotate(-3deg);
+    transition:transform .4s ease;
+  }
+  .hero-photo:hover{transform:rotate(0deg) translateY(-4px);}
+  .hero-photo img{height:200px; width:100%; object-fit:cover;}
+  .hero-dot{
+    position:absolute; width:14px; height:14px; border-radius:50%; background:var(--orange);
+    top:60px; right:60px;
+  }
+
+  /* ---------- marquee strip ---------- */
+  .strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:28px 0; background:var(--cream);
+  }
+  .strip .wrap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;}
+  .strip span{font-size:14px; color:var(--ink-soft);}
+  .strip strong{color:var(--navy); font-weight:500;}
+
+  /* ---------- section heading ---------- */
+  .section-head{max-width:600px; margin-bottom:56px;}
+  .section-head h2{font-size:36px; margin-top:12px;}
+  .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+
+  /* ---------- services ---------- */
+  .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .service-card{
+    border:1px solid var(--line); border-radius:16px; padding:36px 30px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    background:var(--white);
+  }
+  .service-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 28px 50px rgba(11,30,61,0.10);
+    border-color:var(--orange);
+  }
+  .service-num{
+    width:44px; height:44px; border-radius:10px; background:var(--navy);
+    color:var(--orange); display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:18px; margin-bottom:24px;
+  }
+  .service-card h3{font-size:21px; margin-bottom:12px;}
+  .service-card p{font-size:14.5px; margin-bottom:18px;}
+  .service-card ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .service-card li{font-size:13.5px; color:var(--ink-soft); padding-left:16px; position:relative;}
+  .service-card li::before{content:"—"; position:absolute; left:0; color:var(--orange);}
+  .service-link{display:inline-block; margin-top:22px; font-size:14px; color:var(--navy); font-weight:500; border-bottom:1px solid var(--orange); padding-bottom:2px;}
+
+  /* ---------- process ---------- */
+  .process{background:var(--navy); color:var(--white);}
+  .process .section-head h2, .process .section-head .eyebrow{color:var(--white);}
+  .process .section-head .eyebrow{color:var(--orange);}
+  .process .section-head p{color:rgba(255,255,255,0.65);}
+  .process-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative;}
+  .process-row::before{
+    content:""; position:absolute; top:22px; left:6%; right:6%; height:1px;
+    background:var(--line-dark);
+  }
+  .process-step{padding:0 20px; position:relative;}
+  .process-step .step-num{
+    width:44px; height:44px; border-radius:50%; background:var(--navy-deep);
+    border:1px solid var(--orange); color:var(--orange); font-family:'Fraunces',serif;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+    margin-bottom:26px; position:relative; z-index:2;
+  }
+  .process-step h3{color:var(--white); font-size:19px; margin-bottom:10px;}
+  .process-step p{color:rgba(255,255,255,0.62); font-size:14px;}
+
+  /* ---------- why us ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .why-item{background:var(--white); padding:34px 30px; transition:background .3s ease;}
+  .why-item:hover{background:var(--cream);}
+  .why-item h3{font-size:17px; margin-bottom:10px;}
+  .why-item p{font-size:14px;}
+
+  /* ---------- portfolio ---------- */
+  .work-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .work-card{
+    position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
+  }
+  .work-card img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .work-card:hover img{transform:scale(1.08);}
+  .work-overlay{
+    position:absolute; inset:0; display:flex; align-items:flex-end; padding:20px;
+    background:rgba(7,20,39,0.55);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .work-card:hover .work-overlay{opacity:1;}
+  .work-overlay div p{color:rgba(255,255,255,0.7); font-size:12.5px; margin-top:2px;}
+  .work-overlay div b{color:var(--white); font-family:'Fraunces',serif; font-weight:500; font-size:17px;}
+
+  /* ---------- quote ---------- */
+  .quote{background:var(--cream); text-align:center;}
+  .quote blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-size:30px; color:var(--navy);
+    max-width:760px; margin:0 auto; line-height:1.5;
+  }
+  .quote cite{display:block; margin-top:24px; font-style:normal; font-size:14px; color:var(--ink-soft);}
+
+  /* ---------- cta band ---------- */
+  .cta-band{
+    background:var(--navy); color:var(--white); border-radius:24px;
+    padding:64px 60px; display:flex; align-items:center; justify-content:space-between;
+    margin:0 40px; gap:24px; flex-wrap:wrap;
+    position:relative; overflow:hidden;
+  }
+  .cta-band::after{
+    content:""; position:absolute; right:0; top:0; width:6px; height:100%;
+    background:var(--orange);
+  }
+  .cta-band h2{color:var(--white); font-size:32px; max-width:420px; position:relative;}
+  .cta-band .cta-actions{display:flex; gap:14px; position:relative;}
+
+  /* ---------- footer ---------- */
+  footer{padding:70px 0 40px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:40px; border-bottom:1px solid var(--line);}
+  .footer-grid h4{font-size:14px; color:var(--navy); margin-bottom:18px; font-weight:500;}
+  .footer-grid ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .footer-grid a{font-size:14px; color:var(--ink-soft); transition:color .2s ease;}
+  .footer-grid a:hover{color:var(--orange-deep);}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:24px; font-size:13px; color:var(--ink-soft); flex-wrap:wrap; gap:10px;}
+
+  /* ---------- about page ---------- */
+  .about-hero{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+    padding:90px 0 100px;
+  }
+  .about-hero img{border-radius:18px; height:440px; width:100%; object-fit:cover;}
+  .about-hero h1{font-size:44px;}
+  .about-hero p.lead{font-size:17px; margin-top:20px;}
+
+  .mission-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .mission-card{
+    border:1px solid var(--line); border-radius:16px; padding:38px;
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .mission-card:hover{border-color:var(--orange); transform:translateY(-6px);}
+  .mission-card .eyebrow{display:block; margin-bottom:14px;}
+  .mission-card p{font-size:15.5px; color:var(--ink);}
+
+  .values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .value-card{padding:26px 6px; border-top:2px solid var(--navy); transition:border-color .3s ease;}
+  .value-card:hover{border-color:var(--orange);}
+  .value-card h3{font-size:18px; margin-bottom:10px;}
+  .value-card p{font-size:13.5px;}
+
+  .culture-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:18px; height:520px;}
+  .culture-grid img{width:100%; height:100%; object-fit:cover; border-radius:14px; transition:transform .5s ease;}
+  .culture-grid .g1{grid-row:1 / 3;}
+  .culture-item{overflow:hidden; border-radius:14px;}
+  .culture-item:hover img{transform:scale(1.06);}
+
+  @media (max-width:900px){
+    nav.links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:60px;}
+    .hero-visual{height:360px; margin-top:20px;}
+    .hero h1{font-size:38px;}
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
+    .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
+    .about-hero{grid-template-columns:1fr;}
+    .cta-band{flex-direction:column; align-items:flex-start;}
+    .svc-hero .hero-row{grid-template-columns:1fr;}
+    .sub-grid.cols-3, .sub-grid.cols-4{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:600px){
+    .sub-grid.cols-3, .sub-grid.cols-4{grid-template-columns:1fr;}
+  }
+</style>
+<style>
+  /* ---------- mobile nav ---------- */
+  .menu-toggle{
+    display:none; background:none; border:none; cursor:pointer; padding:6px;
+    flex-direction:column; justify-content:center; gap:5px; z-index:60;
+  }
+  .menu-toggle span{display:block; width:22px; height:2px; background:var(--navy); border-radius:2px; transition:all .25s ease;}
+  .mobile-overlay{
+    position:fixed; inset:0; background:rgba(7,20,39,0.45); z-index:190;
+    opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .mobile-overlay.show{opacity:1; pointer-events:auto;}
+  .mobile-drawer{
+    position:fixed; top:0; right:-300px; width:280px; max-width:82vw; height:100vh;
+    background:var(--white); z-index:200; box-shadow:-16px 0 50px rgba(7,20,39,0.18);
+    transition:right .35s cubic-bezier(.2,.7,.2,1);
+    padding:26px 26px 34px; display:flex; flex-direction:column;
+  }
+  .mobile-drawer.open{right:0;}
+  .drawer-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:30px;}
+  .drawer-close{background:none; border:none; font-size:24px; color:var(--ink-soft); cursor:pointer; line-height:1;}
+  .drawer-links{display:flex; flex-direction:column; gap:2px; margin-bottom:auto;}
+  .mobile-drawer .drawer-links a{
+    font-size:16px; color:var(--ink); padding:14px 4px; border-bottom:1px solid var(--line);
+  }
+  .mobile-drawer .drawer-links a.active{color:var(--orange-deep); font-weight:600;}
+  .mobile-drawer .btn{width:100%; justify-content:center; margin-top:24px;}
+
+  @media (max-width:900px){
+    .menu-toggle{display:flex;}
+    .navbar > .btn-primary{display:none;}
+  }
+</style>
+
+
+<style>
+  /* ---------- services hero ---------- */
+  .svc-hero{position:relative; padding:70px 0 0; overflow:hidden;}
+  .svc-hero .wrap{position:relative; z-index:2;}
+  .svc-hero .hero-row{display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center; gap:40px;}
+  .svc-visual{display:flex; align-items:center; justify-content:center; height:440px;}
+  .svc-visual video{width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply;}
+  .svc-tabs{display:flex; gap:12px; margin-bottom:28px;}
+  .svc-tab{
+    padding:10px 20px; border-radius:999px; font-size:13.5px; font-weight:500;
+    border:1px solid var(--line); color:var(--ink-soft); cursor:pointer;
+    transition:all .3s ease; background:var(--white);
+  }
+  .svc-tab:hover{border-color:var(--orange);}
+  .svc-tab.active{background:var(--orange); border-color:var(--orange); color:var(--white);}
+  .svc-slide{display:none;}
+  .svc-slide.active{display:block; animation:svcIn .5s ease;}
+  @keyframes svcIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  .svc-slide .eyebrow{display:block; margin-bottom:16px;}
+  .svc-slide h1{font-size:50px; max-width:680px;}
+  .svc-slide p.lead{font-size:17px; max-width:540px; margin-top:20px;}
+  .tag-pills{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+  .tag-pill{
+    padding:9px 16px; border-radius:999px; border:1px solid var(--line);
+    font-size:13px; color:var(--ink); background:var(--white);
+  }
+  .svc-cta{display:flex; gap:14px; margin-top:32px;}
+  .svc-progress{margin-top:56px; display:flex; gap:8px; padding-bottom:44px;}
+  .svc-progress .bar{flex:1; height:3px; background:var(--line); border-radius:2px; overflow:hidden;}
+  .svc-progress .bar .fill{height:100%; width:0%; background:var(--orange); border-radius:2px;}
+  .svc-progress .bar.done .fill{width:100%; transition:none;}
+  .svc-progress .bar.active .fill{width:0%; animation:fillbar 6s linear forwards;}
+  @keyframes fillbar{from{width:0%;} to{width:100%;}}
+
+  /* ---------- pillar sections ---------- */
+  .pillar-head{max-width:680px; margin-bottom:40px;}
+  .pillar-head h2{font-size:32px; margin-top:10px;}
+  .pillar-tag{font-size:13px; color:var(--orange-deep); font-weight:500; letter-spacing:0.03em;}
+  .sub-grid{display:grid; gap:20px;}
+  .sub-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .sub-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  .sub-card{
+    border:1px solid var(--line); border-radius:16px; padding:26px 22px;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+    background:var(--white);
+  }
+  .sub-card:hover{transform:translateY(-6px); border-color:var(--orange); box-shadow:0 22px 44px rgba(11,30,61,0.08);}
+  .sub-card .sub-index{font-size:12.5px; color:var(--orange-deep); font-weight:600; margin-bottom:8px;}
+  .sub-card h3{font-size:17px; margin-bottom:8px;}
+  .sub-card p{font-size:13px; margin-bottom:16px;}
+  .check-cols{display:flex; flex-direction:column; gap:9px; padding-top:14px; border-top:1px solid var(--line);}
+  .check-cols li{list-style:none; font-size:12.5px; color:var(--ink-soft);}
+  .pillar-block{padding:90px 0;}
+  #pillar-2{background:var(--orange);}
+  #pillar-2 .pillar-tag{color:rgba(255,255,255,0.85);}
+  #pillar-2 .pillar-head h2{color:var(--white);}
+  #pillar-2 .pillar-head p{color:rgba(255,255,255,0.85);}
+  #pillar-2 .sub-card{border-color:rgba(255,255,255,0.4);}
+  #pillar-2 .sub-card:hover{border-color:var(--white); box-shadow:0 22px 44px rgba(7,20,39,0.18);}
+  #pillar-2 .sub-card .sub-index{color:var(--navy);}
+  #pillar-3{background:var(--cream);}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a class="btn btn-primary" href="contact.html">Start a project</a>
+  </div>
+</header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-top">
+    <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="drawer-links">
+    <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="gifts.html">Gifts</a>
+      <a href="contact.html">Contact</a>
+  </div>
+  <a class="btn btn-primary" href="contact.html">Start a project</a>
+</div>
+
+
+<!-- ============ HERO CAROUSEL ============ -->
+<section class="svc-hero">
+  <div class="wrap">
+    <div class="hero-row">
+      <div>
+        <p class="eyebrow" style="margin-bottom:20px;">Digital · Creative · Growth</p>
+
+        <div class="svc-tabs">
+          <button class="svc-tab active" data-slide="0">01 Build</button>
+          <button class="svc-tab" data-slide="1">02 Brand</button>
+          <button class="svc-tab" data-slide="2">03 Grow</button>
+        </div>
+
+        <div class="svc-slide active" data-slide-content="0">
+          <span class="eyebrow">01 — BUILD</span>
+          <h1>Websites and apps that work as hard as you do</h1>
+          <p class="lead">Websites, web applications, and mobile apps that are responsive, easy to use, and built around your brand.</p>
+          <div class="tag-pills">
+            <span class="tag-pill">Website development</span>
+            <span class="tag-pill">Web applications</span>
+            <span class="tag-pill">Mobile applications</span>
+            <span class="tag-pill">Maintenance and support</span>
+          </div>
+          <div class="svc-cta">
+            <a class="btn btn-primary" href="contact.html">Start a project →</a>
+            <a class="btn btn-ghost" href="#pillar-1">Explore services</a>
+          </div>
+        </div>
+
+        <div class="svc-slide" data-slide-content="1">
+          <span class="eyebrow">02 — BRAND</span>
+          <h1>A visual identity people actually remember</h1>
+          <p class="lead">Visual identity, logos, and print or digital assets that make your business recognizable and consistent.</p>
+          <div class="tag-pills">
+            <span class="tag-pill">Graphic design</span>
+            <span class="tag-pill">Brand identity</span>
+            <span class="tag-pill">Logo design</span>
+            <span class="tag-pill">Branding assets</span>
+          </div>
+          <div class="svc-cta">
+            <a class="btn btn-primary" href="contact.html">Start a project →</a>
+            <a class="btn btn-ghost" href="#pillar-2">Explore services</a>
+          </div>
+        </div>
+
+        <div class="svc-slide" data-slide-content="2">
+          <span class="eyebrow">03 — GROW</span>
+          <h1>Turn visibility into real engagement</h1>
+          <p class="lead">Social media management, content, and digital marketing support that turn visibility into real engagement.</p>
+          <div class="tag-pills">
+            <span class="tag-pill">Account management</span>
+            <span class="tag-pill">Content and copywriting</span>
+            <span class="tag-pill">Content strategy</span>
+            <span class="tag-pill">Paid advertising support</span>
+          </div>
+          <div class="svc-cta">
+            <a class="btn btn-primary" href="contact.html">Start a project →</a>
+            <a class="btn btn-ghost" href="#pillar-3">Explore services</a>
+          </div>
+        </div>
+
+        <div class="svc-progress">
+          <div class="bar active" data-bar="0"><div class="fill"></div></div>
+          <div class="bar" data-bar="1"><div class="fill"></div></div>
+          <div class="bar" data-bar="2"><div class="fill"></div></div>
+        </div>
+      </div>
+
+      <div class="svc-visual reveal visible">
+        <video autoplay muted loop playsinline>
+          <source src="codeonbaiti-animation-white-bg.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OVERVIEW ============ -->
+<section style="padding:60px 0 100px;">
+  <div class="wrap">
+    <div class="reveal" style="background:var(--navy); border-radius:24px; padding:56px 60px;">
+      <p class="eyebrow" style="color:var(--orange);">Service overview</p>
+      <h2 style="color:var(--white); margin-top:12px;">Three service pillars, one consistent standard.</h2>
+      <p style="margin-top:16px; font-size:15.5px; color:rgba(255,255,255,0.72); max-width:600px;">Our services are organized into three connected pillars. Clients can start with one and expand, or combine all three into a complete digital and brand package.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PILLAR 1 ============ -->
+<section class="pillar-block" id="pillar-1">
+  <div class="wrap">
+    <div class="pillar-head reveal">
+      <span class="pillar-tag">PILLAR 01</span>
+      <h2>Web &amp; Mobile Development</h2>
+      <p style="margin-top:12px; font-size:15px;">We design and develop modern, responsive and user-friendly digital solutions that help businesses operate and engage with their customers online.</p>
+    </div>
+    <div class="sub-grid cols-3">
+      <div class="sub-card reveal d1">
+        <div class="sub-index">1.1</div>
+        <h3>Website Development</h3>
+        <p>Professional websites for businesses, organizations, personal brands, schools, churches and other institutions.</p>
+        <ul class="check-cols">
+          <li>Business websites</li><li>Corporate websites</li>
+          <li>Portfolio and personal websites</li><li>Institutional websites</li>
+          <li>Website maintenance and updates</li><li>Performance and speed optimization</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d2">
+        <div class="sub-index">1.2</div>
+        <h3>Web Applications</h3>
+        <p>Customized web-based applications that help businesses digitize processes, manage information and improve efficiency.</p>
+        <ul class="check-cols">
+          <li>Business management systems</li><li>Customer management systems</li>
+          <li>Booking and registration systems</li><li>Dashboards and reporting platforms</li>
+          <li>Data collection systems</li><li>E-commerce web applications</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d3">
+        <div class="sub-index">1.3</div>
+        <h3>Mobile Applications</h3>
+        <p>Mobile applications that let businesses provide convenient digital services to their customers and teams.</p>
+        <ul class="check-cols">
+          <li>Android applications</li><li>Cross-platform mobile applications</li>
+          <li>Customer service applications</li><li>Business and internal-use applications</li>
+          <li>Application maintenance and improvements</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PILLAR 2 ============ -->
+<section class="pillar-block" id="pillar-2">
+  <div class="wrap">
+    <div class="pillar-head reveal">
+      <span class="pillar-tag">PILLAR 02</span>
+      <h2>Branding &amp; Graphic Design</h2>
+      <p style="margin-top:12px; font-size:15px;">We help businesses create a professional and consistent visual identity that communicates who they are and makes them recognizable to their customers.</p>
+    </div>
+    <div class="sub-grid cols-4">
+      <div class="sub-card reveal d1">
+        <div class="sub-index">2.1</div>
+        <h3>Graphic Design</h3>
+        <p>Professional visual materials for both digital and print use.</p>
+        <ul class="check-cols">
+          <li>Posters and flyers</li><li>Social media graphics</li>
+          <li>Business profiles</li><li>Brochures and company documents</li>
+          <li>Marketing materials</li><li>Presentation designs</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d2">
+        <div class="sub-index">2.2</div>
+        <h3>Brand Identity</h3>
+        <p>A strong visual identity that reflects a business's personality, values and target market.</p>
+        <ul class="check-cols">
+          <li>Brand identity development</li><li>Brand guidelines</li>
+          <li>Typography selection</li><li>Colour systems</li>
+          <li>Visual style development</li><li>Brand consistency reviews</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d3">
+        <div class="sub-index">2.3</div>
+        <h3>Logo Design</h3>
+        <p>Professional, memorable logos delivered in the formats you need for print and screen.</p>
+        <ul class="check-cols">
+          <li>Primary and secondary marks</li><li>Print and screen formats</li>
+          <li>Usage guidance</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d4">
+        <div class="sub-index">2.4</div>
+        <h3>Branding Assets</h3>
+        <p>Everyday materials that keep your brand consistent everywhere it appears.</p>
+        <ul class="check-cols">
+          <li>Business cards &amp; letterheads</li><li>Email signatures</li>
+          <li>Social media templates</li><li>Branded documents &amp; promotional materials</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PILLAR 3 ============ -->
+<section class="pillar-block" id="pillar-3">
+  <div class="wrap">
+    <div class="pillar-head reveal">
+      <span class="pillar-tag">PILLAR 03</span>
+      <h2>Social Media Management</h2>
+      <p style="margin-top:12px; font-size:15px;">We help businesses build a consistent and engaging presence across social platforms while connecting their brand with the right audience.</p>
+    </div>
+    <div class="sub-grid cols-4">
+      <div class="sub-card reveal d1">
+        <div class="sub-index">3.1</div>
+        <h3>Social Media Management</h3>
+        <p>Planning, creating, publishing, and monitoring content across your accounts.</p>
+        <ul class="check-cols">
+          <li>Account management</li><li>Content planning</li>
+          <li>Content scheduling</li><li>Audience engagement</li>
+          <li>Page optimization</li><li>Performance monitoring</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d2">
+        <div class="sub-index">3.2</div>
+        <h3>Content &amp; Copywriting</h3>
+        <p>Relevant, visually appealing content designed to communicate the brand and engage its audience.</p>
+        <ul class="check-cols">
+          <li>Social media posts</li><li>Promotional graphics</li>
+          <li>Short-form content</li><li>Educational content</li>
+          <li>Product and service promotions</li><li>Campaign content</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d3">
+        <div class="sub-index">3.3</div>
+        <h3>Content Strategy</h3>
+        <p>Content strategies based on business objectives, target audiences, and the platforms being used.</p>
+        <ul class="check-cols">
+          <li>Content calendars</li><li>Content themes</li>
+          <li>Brand messaging</li><li>Audience research</li>
+          <li>Campaign planning</li><li>Performance review</li>
+        </ul>
+      </div>
+      <div class="sub-card reveal d4">
+        <div class="sub-index">3.4</div>
+        <h3>Digital Marketing &amp; Paid Advertising</h3>
+        <p>Marketing activities aimed at increasing visibility, generating leads, and strengthening engagement.</p>
+        <ul class="check-cols">
+          <li>Digital campaign planning</li><li>Online promotions</li>
+          <li>Marketing content</li><li>Social media campaigns</li>
+          <li>Lead generation support</li><li>Digital performance reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section style="background:var(--navy); padding:100px 0;">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="reveal" style="color:var(--white); font-size:40px; max-width:700px; margin:0 auto;">Ready to build, brand, and grow?</h2>
+    <p class="reveal d1" style="color:rgba(255,255,255,0.65); margin:18px auto 0; max-width:480px;">Tell us where you're starting from — we'll help you decide which pillar to begin with.</p>
+    <div class="reveal d2" style="display:flex; gap:14px; justify-content:center; margin-top:32px;">
+      <a class="btn btn-primary" href="mailto:hello@codeonbaiti.com">Start a project →</a>
+      <a class="btn btn-outline-light" href="index.html">Back to home</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">Code<span>On</span>Baiti</a>
+        <p style="margin-top:16px; font-size:14px; max-width:260px;">Digital · Creative · Growth. Practical solutions for businesses, organizations and individuals.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#pillar-1">Web &amp; mobile</a></li>
+          <li><a href="#pillar-2">Branding &amp; design</a></li>
+          <li><a href="#pillar-3">Social &amp; marketing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="gifts.html">Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@codeonbaiti.com">hello@codeonbaiti.com</a></li>
+          <li><a href="#">+254 700 000 000</a></li>
+          <li><a href="#">@codeonbaiti</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© CodeOnBaiti Media</span>
+      <span>Design preview — not final code</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- hero carousel ----
+  const tabs = document.querySelectorAll('.svc-tab');
+  const slides = document.querySelectorAll('[data-slide-content]');
+  const bars = document.querySelectorAll('.svc-progress .bar');
+  let current = 0, timer;
+
+  function showSlide(i){
+    current = (i + slides.length) % slides.length;
+    tabs.forEach((t, idx) => t.classList.toggle('active', idx === current));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    bars.forEach((b, idx) => {
+      b.classList.remove('active','done');
+      if(idx < current) b.classList.add('done');
+      if(idx === current) b.classList.add('active');
+    });
+  }
+  function nextSlide(){ showSlide(current + 1); }
+  function startTimer(){
+    clearInterval(timer);
+    timer = setInterval(nextSlide, 6000);
+  }
+  tabs.forEach((t, idx) => t.addEventListener('click', () => { showSlide(idx); startTimer(); }));
+  showSlide(0);
+  startTimer();
+
+  // ---- scroll reveal ----
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+</script>
+
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var drawer = document.getElementById('mobileDrawer');
+    var overlay = document.getElementById('mobileOverlay');
+    var closeBtn = document.getElementById('drawerClose');
+    if(!toggle || !drawer || !overlay) return;
+    function openDrawer(){
+      drawer.classList.add('open');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeDrawer);
+    });
+  })();
+</script>
+
+</body>
+</html>
