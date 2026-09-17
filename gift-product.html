@@ -20,14 +20,18 @@
     --line:#E3E1D9;
     --line-dark:rgba(255,255,255,0.14);
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  a, button{outline:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--orange); outline-offset:2px;}
+  html{scroll-behavior:smooth; scroll-padding-top:92px; overflow-x:hidden;}
   body{
     margin:0;
     font-family:'Space Grotesk', sans-serif;
     color:var(--ink);
     background:var(--white);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
   }
   h1,h2,h3{
     font-family:'Fraunces', serif;
@@ -297,7 +301,12 @@
     .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
     .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
     .about-hero{grid-template-columns:1fr;}
-    .cta-band{flex-direction:column; align-items:flex-start;}
+    .cta-band{flex-direction:column; align-items:flex-start; margin:0 20px; padding:40px 28px;}
+    .cta-band .cta-actions{flex-direction:column; align-items:stretch; width:100%;}
+    .cta-band .btn{width:100%; text-align:center; justify-content:center;}
+  }
+  @media (max-width:640px){
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid, .gift-grid, .culture-grid{grid-template-columns:1fr;}
   }
 </style>
 <style>
@@ -358,7 +367,7 @@
   .gp-body p.desc{font-size:15.5px; margin-bottom:18px;}
   .gp-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px;}
   .gp-tags span{font-size:12.5px; padding:8px 14px; border-radius:999px; background:var(--cream); border:1px dashed var(--line); color:var(--ink);}
-  .gp-side{border:1px solid var(--line); border-radius:18px; padding:30px; height:fit-content;}
+  .gp-side{min-width:0; border:1px solid var(--line); border-radius:18px; padding:30px; height:fit-content;}
   .gp-side .row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
   .gp-side .row:last-child{border-bottom:none;}
   .gp-side .row span:first-child{color:var(--ink-soft);}
@@ -445,7 +454,7 @@
 <section style="background:var(--navy); padding:90px 0;">
   <div class="wrap" style="text-align:center;">
     <h2 class="reveal" style="color:var(--white); font-size:32px; max-width:600px; margin:0 auto;">Want this customized for your brand?</h2>
-    <div class="reveal d1" style="display:flex; gap:14px; justify-content:center; margin-top:28px;">
+    <div class="reveal d1" style="display:flex; gap:14px; justify-content:center; margin-top:28px; flex-wrap:wrap;">
       <a class="btn btn-primary" href="contact.html">Start a gift order →</a>
       <a class="btn btn-outline-light" href="gifts.html">Browse all gifts</a>
     </div>

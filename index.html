@@ -20,7 +20,9 @@
     --line:#E3E1D9;
     --line-dark:rgba(255,255,255,0.14);
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  a, button{outline:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--orange); outline-offset:2px;}
   html{scroll-behavior:smooth; scroll-padding-top:92px; overflow-x:hidden;}
   body{
     margin:0;

@@ -20,14 +20,18 @@
     --line:#E3E1D9;
     --line-dark:rgba(255,255,255,0.14);
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; scroll-padding-top:92px;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  a, button{outline:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--orange); outline-offset:2px;}
+  html{scroll-behavior:smooth; scroll-padding-top:92px; overflow-x:hidden;}
   body{
     margin:0;
     font-family:'Space Grotesk', sans-serif;
     color:var(--ink);
     background:var(--white);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
   }
   h1,h2,h3{
     font-family:'Fraunces', serif;
@@ -297,7 +301,12 @@
     .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
     .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
     .about-hero{grid-template-columns:1fr;}
-    .cta-band{flex-direction:column; align-items:flex-start;}
+    .cta-band{flex-direction:column; align-items:flex-start; margin:0 20px; padding:40px 28px;}
+    .cta-band .cta-actions{flex-direction:column; align-items:stretch; width:100%;}
+    .cta-band .btn{width:100%; text-align:center; justify-content:center;}
+  }
+  @media (max-width:640px){
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid, .gift-grid, .culture-grid{grid-template-columns:1fr;}
   }
 </style>
 <style>
@@ -378,7 +387,7 @@
   .gift-section-head h2{font-size:24px; margin-bottom:6px;}
   .gift-section-head p{font-size:14.5px; max-width:480px;}
   .gal-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .gal-item{display:block; position:relative; border-radius:18px; overflow:hidden; height:220px; transform:rotate(0deg); transition:transform .35s ease, box-shadow .35s ease; cursor:pointer;}
+  .gal-item{display:block; position:relative; min-width:0; border-radius:18px; overflow:hidden; height:220px; transform:rotate(0deg); transition:transform .35s ease, box-shadow .35s ease; cursor:pointer;}
   .gal-caption{
     position:absolute; left:0; right:0; bottom:0; padding:14px 16px 12px; z-index:2;
     font-size:13px; font-weight:500; color:var(--white);
@@ -641,7 +650,7 @@
   <div class="wrap" style="text-align:center;">
     <h2 class="reveal" style="color:var(--white); font-size:34px; max-width:620px; margin:0 auto;">Want something custom for your team?</h2>
     <p class="reveal d1" style="color:rgba(255,255,255,0.65); margin:16px auto 0; max-width:460px;">Tell us the occasion and the headcount — we'll put together options that fit your brand and budget.</p>
-    <div class="reveal d2" style="display:flex; gap:14px; justify-content:center; margin-top:30px;">
+    <div class="reveal d2" style="display:flex; gap:14px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
       <a class="btn btn-primary" href="contact.html">Start a gift order →</a>
       <a class="btn btn-outline-light" href="index.html">Back to home</a>
     </div>
