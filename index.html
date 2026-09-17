@@ -21,13 +21,15 @@
     --line-dark:rgba(255,255,255,0.14);
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; scroll-padding-top:92px;}
+  html{scroll-behavior:smooth; scroll-padding-top:92px; overflow-x:hidden;}
   body{
     margin:0;
     font-family:'Space Grotesk', sans-serif;
     color:var(--ink);
     background:var(--white);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
   }
   h1,h2,h3{
     font-family:'Fraunces', serif;
@@ -95,6 +97,7 @@
   /* ---------- gifts / printed products ---------- */
   .gift-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
   .gift-card{
+    min-width:0;
     display:block; background:var(--white); border:1px dashed var(--line); border-radius:16px;
     padding:26px 20px; text-align:center;
     transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
@@ -197,6 +200,7 @@
   /* ---------- services ---------- */
   .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
   .service-card{
+    min-width:0;
     display:block;
     border:1px solid var(--line); border-radius:16px; padding:36px 30px;
     transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
@@ -250,6 +254,7 @@
   /* ---------- portfolio ---------- */
   .work-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
   .work-card{
+    min-width:0;
     display:block; position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
   }
   .work-card img{
@@ -336,7 +341,7 @@
     .gift-grid{grid-template-columns:1fr 1fr;}
     .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
     .about-hero{grid-template-columns:1fr;}
-    .cta-band{flex-direction:column; align-items:flex-start;}
+    .cta-band{flex-direction:column; align-items:flex-start; margin:0 20px; padding:40px 28px;}
   }
 </style>
 <style>
