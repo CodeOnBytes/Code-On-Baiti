@@ -250,7 +250,7 @@
   /* ---------- portfolio ---------- */
   .work-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
   .work-card{
-    position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
+    display:block; position:relative; border-radius:14px; overflow:hidden; height:260px; cursor:pointer;
   }
   .work-card img{
     width:100%; height:100%; object-fit:cover;
@@ -569,22 +569,22 @@
         <h2>A few things we'd love to walk you through.</h2>
       </div>
       <div class="work-grid">
-        <div class="work-card reveal d1">
+        <a class="work-card reveal d1" href="project.html?id=institutional-website-refresh">
           <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=500&q=80" alt="Website design mockup" />
-          <div class="work-overlay"><div><b>Business website</b><p>Web development</p></div></div>
-        </div>
-        <div class="work-card reveal d2">
+          <div class="work-overlay"><div><b>Institutional website refresh</b><p>Web development</p></div></div>
+        </a>
+        <a class="work-card reveal d2" href="project.html?id=full-brand-identity-system">
           <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=500&q=80" alt="Brand identity mockup" />
-          <div class="work-overlay"><div><b>Brand identity</b><p>Branding &amp; design</p></div></div>
-        </div>
-        <div class="work-card reveal d3">
+          <div class="work-overlay"><div><b>Full brand identity system</b><p>Branding &amp; design</p></div></div>
+        </a>
+        <a class="work-card reveal d3" href="project.html?id=always-on-social-management">
           <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=500&q=80" alt="Social media content grid" />
-          <div class="work-overlay"><div><b>Campaign content</b><p>Social media</p></div></div>
-        </div>
-        <div class="work-card reveal d4">
+          <div class="work-overlay"><div><b>Always-on social management</b><p>Social media</p></div></div>
+        </a>
+        <a class="work-card reveal d4" href="project.html?id=booking-registration-platform">
           <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80" alt="Team reviewing a design" />
-          <div class="work-overlay"><div><b>Dashboard system</b><p>Web application</p></div></div>
-        </div>
+          <div class="work-overlay"><div><b>Booking &amp; registration platform</b><p>Web application</p></div></div>
+        </a>
       </div>
     </div>
   </section>
