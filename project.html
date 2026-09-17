@@ -21,13 +21,15 @@
     --line-dark:rgba(255,255,255,0.14);
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; scroll-padding-top:92px; overflow-x:hidden;}
   body{
     margin:0;
     font-family:'Space Grotesk', sans-serif;
     color:var(--ink);
     background:var(--white);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
   }
   h1,h2,h3{
     font-family:'Fraunces', serif;
@@ -297,7 +299,7 @@
     .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
     .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
     .about-hero{grid-template-columns:1fr;}
-    .cta-band{flex-direction:column; align-items:flex-start;}
+    .cta-band{flex-direction:column; align-items:flex-start; margin:0 20px; padding:40px 28px;}
   }
 </style>
 <style>
@@ -331,12 +333,8 @@
   @media (max-width:900px){
     .menu-toggle{display:flex;}
     .navbar > .btn-primary{display:none;}
-    .proj-body{grid-template-columns:1fr;}
-    .proj-hero h1{font-size:32px;}
   }
 </style>
-
-
 <style>
   .proj-hero{padding:70px 0 20px;}
   .proj-back{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft); margin-bottom:28px;}
@@ -354,12 +352,16 @@
   .proj-body p.desc{font-size:15.5px; margin-bottom:20px;}
   .proj-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;}
   .proj-tags span{font-size:12.5px; padding:8px 14px; border-radius:999px; background:var(--cream); border:1px solid var(--line); color:var(--ink);}
-  .proj-side{border:1px solid var(--line); border-radius:16px; padding:30px; height:fit-content;}
+  .proj-side{min-width:0; border:1px solid var(--line); border-radius:16px; padding:30px; height:fit-content;}
   .proj-side .row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
   .proj-side .row:last-child{border-bottom:none;}
   .proj-side .row span:first-child{color:var(--ink-soft);}
   .proj-side .row span:last-child{color:var(--ink); font-weight:500;}
   .proj-side .btn{width:100%; justify-content:center; margin-top:20px;}
+  @media (max-width:900px){
+    .proj-body{grid-template-columns:1fr;}
+    .proj-hero h1{font-size:32px;}
+  }
 </style>
 
 </head>
@@ -430,7 +432,7 @@
 <section style="background:var(--navy); padding:90px 0;">
   <div class="wrap" style="text-align:center;">
     <h2 class="reveal" style="color:var(--white); font-size:32px; max-width:600px; margin:0 auto;">Have a project like this in mind?</h2>
-    <div class="reveal d1" style="display:flex; gap:14px; justify-content:center; margin-top:28px;">
+    <div class="reveal d1" style="display:flex; gap:14px; justify-content:center; margin-top:28px; flex-wrap:wrap;">
       <a class="btn btn-primary" href="mailto:hello@codeonbaiti.com">Start a project →</a>
       <a class="btn btn-outline-light" href="portfolio.html">See more work</a>
     </div>
