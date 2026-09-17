@@ -119,7 +119,7 @@
     transition:opacity .6s ease;
   }
   #splash.hide{opacity:0; pointer-events:none;}
-  #splash video{width:min(440px, 70vw); height:auto; mix-blend-mode:multiply;}
+  #splash video{width:100vw; height:100vh; object-fit:contain; mix-blend-mode:multiply;}
   #splash .splash-skip{
     position:absolute; bottom:32px; right:36px; font-size:13px; color:var(--ink-soft);
     cursor:pointer; border:1px solid var(--line); padding:9px 18px; border-radius:999px;
@@ -404,8 +404,8 @@
     video.addEventListener('ended', finish);
     video.addEventListener('error', finish);
     document.getElementById('splashSkip').addEventListener('click', finish);
-    // safety net in case the video can't play for some reason
-    setTimeout(finish, 6000);
+    // safety net in case the video can't play for some reason (video itself runs ~9s)
+    setTimeout(finish, 11000);
   })();
 </script>
 
