@@ -300,6 +300,7 @@
     .cta-band{flex-direction:column; align-items:flex-start;}
     .svc-hero .hero-row{grid-template-columns:1fr;}
     .sub-grid.cols-3, .sub-grid.cols-4{grid-template-columns:1fr 1fr;}
+    .pillar-head{flex-direction:column; align-items:flex-start;}
   }
   @media (max-width:600px){
     .sub-grid.cols-3, .sub-grid.cols-4{grid-template-columns:1fr;}
@@ -375,16 +376,20 @@
   @keyframes fillbar{from{width:0%;} to{width:100%;}}
 
   /* ---------- pillar sections ---------- */
-  .pillar-head{max-width:680px; margin-bottom:40px;}
+  .pillar-head{
+    display:flex; align-items:center; justify-content:space-between; gap:32px;
+    max-width:none; margin-bottom:40px;
+  }
+  .pillar-head-text{max-width:640px;}
   .pillar-head h2{font-size:32px; margin-top:10px;}
   .pillar-tag{font-size:13px; color:var(--orange-deep); font-weight:500; letter-spacing:0.03em;}
   .sub-grid{display:grid; gap:20px;}
   .sub-grid.cols-3{grid-template-columns:repeat(3,1fr);}
   .sub-grid.cols-4{grid-template-columns:repeat(4,1fr);}
   .sub-card{
-    border:1px solid var(--line); border-radius:16px; padding:26px 22px;
+    display:block; border:1px solid var(--line); border-radius:16px; padding:26px 22px;
     transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
-    background:var(--white);
+    background:var(--white); cursor:pointer;
   }
   .sub-card:hover{transform:translateY(-6px); border-color:var(--orange); box-shadow:0 22px 44px rgba(11,30,61,0.08);}
   .sub-card .sub-index{font-size:12.5px; color:var(--orange-deep); font-weight:600; margin-bottom:8px;}
@@ -392,7 +397,7 @@
   .sub-card p{font-size:13px; margin-bottom:16px;}
   .check-cols{display:flex; flex-direction:column; gap:9px; padding-top:14px; border-top:1px solid var(--line);}
   .check-cols li{list-style:none; font-size:12.5px; color:var(--ink-soft);}
-  .pillar-block{padding:90px 0;}
+  .pillar-block{padding:56px 0;}
   #pillar-2{background:var(--orange);}
   #pillar-2 .pillar-tag{color:rgba(255,255,255,0.85);}
   #pillar-2 .pillar-head h2{color:var(--white);}
@@ -531,12 +536,14 @@
 <section class="pillar-block" id="pillar-1">
   <div class="wrap">
     <div class="pillar-head reveal">
-      <span class="pillar-tag">PILLAR 01</span>
-      <h2>Web &amp; Mobile Development</h2>
-      <p style="margin-top:12px; font-size:15px;">We design and develop modern, responsive and user-friendly digital solutions that help businesses operate and engage with their customers online.</p>
+      <div class="pillar-head-text">
+        <span class="pillar-tag">PILLAR 01 · BUILD</span>
+        <h2>Web &amp; Mobile Development</h2>
+        <p style="margin-top:12px; font-size:15px;">We design and develop modern, responsive and user-friendly digital solutions that help businesses operate and engage with their customers online.</p>
+      </div>
     </div>
     <div class="sub-grid cols-3">
-      <div class="sub-card reveal d1">
+      <a class="sub-card reveal d1" href="portfolio.html?filter=build">
         <div class="sub-index">1.1</div>
         <h3>Website Development</h3>
         <p>Professional websites for businesses, organizations, personal brands, schools, churches and other institutions.</p>
@@ -545,8 +552,8 @@
           <li>Portfolio and personal websites</li><li>Institutional websites</li>
           <li>Website maintenance and updates</li><li>Performance and speed optimization</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d2">
+      </a>
+      <a class="sub-card reveal d2" href="portfolio.html?filter=build">
         <div class="sub-index">1.2</div>
         <h3>Web Applications</h3>
         <p>Customized web-based applications that help businesses digitize processes, manage information and improve efficiency.</p>
@@ -555,8 +562,8 @@
           <li>Booking and registration systems</li><li>Dashboards and reporting platforms</li>
           <li>Data collection systems</li><li>E-commerce web applications</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d3">
+      </a>
+      <a class="sub-card reveal d3" href="portfolio.html?filter=build">
         <div class="sub-index">1.3</div>
         <h3>Mobile Applications</h3>
         <p>Mobile applications that let businesses provide convenient digital services to their customers and teams.</p>
@@ -565,7 +572,7 @@
           <li>Customer service applications</li><li>Business and internal-use applications</li>
           <li>Application maintenance and improvements</li>
         </ul>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -574,12 +581,14 @@
 <section class="pillar-block" id="pillar-2">
   <div class="wrap">
     <div class="pillar-head reveal">
-      <span class="pillar-tag">PILLAR 02</span>
-      <h2>Branding &amp; Graphic Design</h2>
-      <p style="margin-top:12px; font-size:15px;">We help businesses create a professional and consistent visual identity that communicates who they are and makes them recognizable to their customers.</p>
+      <div class="pillar-head-text">
+        <span class="pillar-tag">PILLAR 02 · BRAND</span>
+        <h2>Branding &amp; Graphic Design</h2>
+        <p style="margin-top:12px; font-size:15px;">We help businesses create a professional and consistent visual identity that communicates who they are and makes them recognizable to their customers.</p>
+      </div>
     </div>
     <div class="sub-grid cols-4">
-      <div class="sub-card reveal d1">
+      <a class="sub-card reveal d1" href="portfolio.html?filter=brand">
         <div class="sub-index">2.1</div>
         <h3>Graphic Design</h3>
         <p>Professional visual materials for both digital and print use.</p>
@@ -588,8 +597,8 @@
           <li>Business profiles</li><li>Brochures and company documents</li>
           <li>Marketing materials</li><li>Presentation designs</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d2">
+      </a>
+      <a class="sub-card reveal d2" href="portfolio.html?filter=brand">
         <div class="sub-index">2.2</div>
         <h3>Brand Identity</h3>
         <p>A strong visual identity that reflects a business's personality, values and target market.</p>
@@ -598,8 +607,8 @@
           <li>Typography selection</li><li>Colour systems</li>
           <li>Visual style development</li><li>Brand consistency reviews</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d3">
+      </a>
+      <a class="sub-card reveal d3" href="portfolio.html?filter=brand">
         <div class="sub-index">2.3</div>
         <h3>Logo Design</h3>
         <p>Professional, memorable logos delivered in the formats you need for print and screen.</p>
@@ -607,8 +616,8 @@
           <li>Primary and secondary marks</li><li>Print and screen formats</li>
           <li>Usage guidance</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d4">
+      </a>
+      <a class="sub-card reveal d4" href="portfolio.html?filter=brand">
         <div class="sub-index">2.4</div>
         <h3>Branding Assets</h3>
         <p>Everyday materials that keep your brand consistent everywhere it appears.</p>
@@ -616,7 +625,7 @@
           <li>Business cards &amp; letterheads</li><li>Email signatures</li>
           <li>Social media templates</li><li>Branded documents &amp; promotional materials</li>
         </ul>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -625,12 +634,14 @@
 <section class="pillar-block" id="pillar-3">
   <div class="wrap">
     <div class="pillar-head reveal">
-      <span class="pillar-tag">PILLAR 03</span>
-      <h2>Social Media Management</h2>
-      <p style="margin-top:12px; font-size:15px;">We help businesses build a consistent and engaging presence across social platforms while connecting their brand with the right audience.</p>
+      <div class="pillar-head-text">
+        <span class="pillar-tag">PILLAR 03 · GROW</span>
+        <h2>Social Media Management</h2>
+        <p style="margin-top:12px; font-size:15px;">We help businesses build a consistent and engaging presence across social platforms while connecting their brand with the right audience.</p>
+      </div>
     </div>
     <div class="sub-grid cols-4">
-      <div class="sub-card reveal d1">
+      <a class="sub-card reveal d1" href="portfolio.html?filter=grow">
         <div class="sub-index">3.1</div>
         <h3>Social Media Management</h3>
         <p>Planning, creating, publishing, and monitoring content across your accounts.</p>
@@ -639,8 +650,8 @@
           <li>Content scheduling</li><li>Audience engagement</li>
           <li>Page optimization</li><li>Performance monitoring</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d2">
+      </a>
+      <a class="sub-card reveal d2" href="portfolio.html?filter=grow">
         <div class="sub-index">3.2</div>
         <h3>Content &amp; Copywriting</h3>
         <p>Relevant, visually appealing content designed to communicate the brand and engage its audience.</p>
@@ -649,8 +660,8 @@
           <li>Short-form content</li><li>Educational content</li>
           <li>Product and service promotions</li><li>Campaign content</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d3">
+      </a>
+      <a class="sub-card reveal d3" href="portfolio.html?filter=grow">
         <div class="sub-index">3.3</div>
         <h3>Content Strategy</h3>
         <p>Content strategies based on business objectives, target audiences, and the platforms being used.</p>
@@ -659,8 +670,8 @@
           <li>Brand messaging</li><li>Audience research</li>
           <li>Campaign planning</li><li>Performance review</li>
         </ul>
-      </div>
-      <div class="sub-card reveal d4">
+      </a>
+      <a class="sub-card reveal d4" href="portfolio.html?filter=grow">
         <div class="sub-index">3.4</div>
         <h3>Digital Marketing &amp; Paid Advertising</h3>
         <p>Marketing activities aimed at increasing visibility, generating leads, and strengthening engagement.</p>
@@ -669,7 +680,7 @@
           <li>Marketing content</li><li>Social media campaigns</li>
           <li>Lead generation support</li><li>Digital performance reporting</li>
         </ul>
-      </div>
+      </a>
     </div>
   </div>
 </section>
