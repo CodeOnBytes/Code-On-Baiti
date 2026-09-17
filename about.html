@@ -21,13 +21,15 @@
     --line-dark:rgba(255,255,255,0.14);
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; scroll-padding-top:92px; overflow-x:hidden;}
   body{
     margin:0;
     font-family:'Space Grotesk', sans-serif;
     color:var(--ink);
     background:var(--white);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
   }
   h1,h2,h3{
     font-family:'Fraunces', serif;
@@ -270,6 +272,7 @@
 
   .mission-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
   .mission-card{
+    min-width:0;
     border:1px solid var(--line); border-radius:16px; padding:38px;
     transition:border-color .3s ease, transform .3s ease;
   }
@@ -278,7 +281,7 @@
   .mission-card p{font-size:15.5px; color:var(--ink);}
 
   .values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
-  .value-card{padding:26px 6px; border-top:2px solid var(--navy); transition:border-color .3s ease;}
+  .value-card{min-width:0; padding:26px 6px; border-top:2px solid var(--navy); transition:border-color .3s ease;}
   .value-card:hover{border-color:var(--orange);}
   .value-card h3{font-size:18px; margin-bottom:10px;}
   .value-card p{font-size:13.5px;}
@@ -297,7 +300,10 @@
     .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid{grid-template-columns:1fr 1fr;}
     .culture-grid{grid-template-columns:1fr 1fr; height:auto;}
     .about-hero{grid-template-columns:1fr;}
-    .cta-band{flex-direction:column; align-items:flex-start;}
+    .cta-band{flex-direction:column; align-items:flex-start; margin:0 20px; padding:40px 28px;}
+  }
+  @media (max-width:640px){
+    .services-grid, .why-grid, .process-row, .work-grid, .footer-grid, .mission-grid, .values-grid, .gift-grid, .culture-grid{grid-template-columns:1fr;}
   }
 </style>
 <style>
@@ -405,7 +411,7 @@
       <p class="eyebrow">How we deliver</p>
       <h2>A process built around clarity, not guesswork.</h2>
     </div>
-    <div class="services-grid" style="grid-template-columns:repeat(4,1fr); gap:20px;">
+    <div class="values-grid">
       <div class="service-card reveal d1">
         <div class="service-num">1</div>
         <h3 style="font-size:18px;">Discover</h3>
